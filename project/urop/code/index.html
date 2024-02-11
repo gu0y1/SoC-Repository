@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+  <script src="https://comp.nus.edu.sg/~guoyi/src/prism.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+   
+    <title>Chen Guoyi - UROP</title>
+    <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+    <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+	<link href="https://comp.nus.edu.sg/~guoyi/src/prism.css" rel="stylesheet" />
+    <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+</head>
+
+<body>
+	<header>
+		<div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+		<nav>  
+			<ul>
+				<li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+				<li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+				<li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / project / 
+		<a href="https://comp.nus.edu.sg/~guoyi/project/urop/">urop</a> / 
+		<a href="https://www.comp.nus.edu.sg/~guoyi/project/urop/code">code</a></strong>
+	</section>
+	<section id="pageContent">
+		<main_noaside role="main">
+			<article>
+				<h2>Safe Control Strategies for Autonomous Robots in Complex Interactive Environments</h2><hr>
+				<p><strong>Undergraduate Research Opportunity Programme [<a href="https://cde.nus.edu.sg/undergraduate/build-your-own-degree/enhancement-courses/undergraduate-research-opportunities-programme-eg2605-urop/">EG2605</a>] </strong><br>
+				<br>
+				<strong>Author: </strong> Chen Guoyi<br>
+				<strong>Supervisors: </strong> <a href="https://cde.nus.edu.sg/ece/staff/prahlad-vadakkepat/" target="_blank">Prof. Prahlad Vadakkepat</a>, Liang Yuanchang<br>
+				<strong>DOI: </strong>Pending...<br><br>
+				<strong>Directory: </strong><br>
+				<table>
+				<tbody>
+				<tr>
+				<td></td>
+					<td colspan="3"><a href="https://www.comp.nus.edu.sg/~guoyi/project/urop">Project Homepage</a></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>├</td>
+					<td><a href="https://www.comp.nus.edu.sg/~guoyi/project/urop/demo">Simulation Demonstration</a></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>├</td>
+					<td><a href="https://www.comp.nus.edu.sg/~guoyi/project/urop/dataset">Raw Dataset</a></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>➤</td>
+					<td>└</td>
+					<td>Code</td>
+					<td></td>
+				</tr>
+				</tbody>
+				</table>
+			</p>
+			</article>
+			
+			<article>
+				<h1>Code Repository</h1><br>
+				<iframe src= "https://www.comp.nus.edu.sg/~guoyi/project/urop/code/repository/" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" width= "100%" height= "300px" style="border: 2px solid #ccc;"></iframe>
+				<br><br>
+				
+				
+				<h1>Code Description (ReadMe File)</h1><br>
+				<details>
+				<summary>/MATLAB Simulation / <font color = "blue">APF.m</font></summary>
+				<br>
+
+				<p>The Artificial Potential Field (APF) method employed in this script is pivotal for guiding a robot through an environment peppered with obstacles towards a designated goal. This method hinges on the interplay between attractive and repulsive forces, which respectively draw the robot to its goal and repel it from obstacles. Below are the core mathematical principles that underpin the APF method:</p>
+
+				<ol>
+					<li><strong>Attractive Force Towards the Goal</strong>: The attractive force propels the robot towards its destination. It's quantified by the gradient of an attractive potential field, \( U_{\text{attr}} \), directed towards the goal:
+					<br>
+					\[ \mathbf{F}_{\text{attr}} = -\nabla U_{\text{attr}}(\mathbf{q}) \]
+					<br>
+					The attractive potential field is commonly modeled as a quadratic function of the distance to the goal, \( q_{\text{goal}} \), given by:
+					<br>
+					\[ U_{\text{attr}}(\mathbf{q}) = \frac{1}{2} \zeta \|\mathbf{q} - \mathbf{q}_{\text{goal}}\|^2 \]
+					<br>
+					where \( \zeta \) is a scaling factor that modulates the strength of attraction, and \( \|\mathbf{q} - \mathbf{q}_{\text{goal}}\| \) represents the Euclidean distance between the robot's current position \( \mathbf{q} \) and the goal position \( \mathbf{q}_{\text{goal}} \).</li>
+
+					<li><strong>Repulsive Force From Obstacles</strong>: This force deters the robot from colliding with obstacles by exerting a repulsion that grows as the robot approaches an obstacle. It is quantified as the gradient of a repulsive potential field, \( U_{\text{rep}} \), which is expressed as:
+					<br>
+					\[ \mathbf{F}_{\text{rep}} = \nabla U_{\text{rep}}(\mathbf{q}) \]
+					<br>
+					The repulsive potential field is defined as:
+					<br>
+					\[ U_{\text{rep}}(\mathbf{q}) = \begin{cases} 
+					\frac{1}{2} \eta \left( \frac{1}{\|\mathbf{q} - \mathbf{q}_{\text{obs}}\|} - \frac{1}{d_0} \right)^2 & \text{if } \|\mathbf{q} - \mathbf{q}_{\text{obs}}\| \leq d_0 \\
+					0 & \text{otherwise}
+					\end{cases} \]
+					<br>
+					Here, \( \eta \) is a scaling factor that adjusts the intensity of repulsion, \( \mathbf{q}_{\text{obs}} \) denotes the position of the closest point of the obstacle to the robot, and \( d_0 \) is the distance threshold beyond which the repulsive force ceases to act.</li>
+
+					<li><strong>Overall Navigation Force</strong>: The robot's motion is steered by the cumulative effect of the attractive and repulsive forces, which ensures a trajectory towards the goal while evading obstacles:
+					<br>
+					\[ \mathbf{F}_{\text{total}} = \mathbf{F}_{\text{attr}} + \mathbf{F}_{\text{rep}} \]
+					</li>
+				</ol>
+				<br>
+				<p>This strategic formulation enables the robot to dynamically navigate its path by recalculating these forces at each step based on its present location, the goal's position, and the locations of nearby obstacles detected within its sensor range.</p>
+				</details>
+			</article>
+			
+		</main_noaside>
+	</section>
+	<footer>
+		<p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+		</p>
+	</footer>
+
+
+</body>
+
+</html>

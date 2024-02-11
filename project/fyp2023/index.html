@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+   
+    <title>Chen Guoyi - FYP2023</title>
+    <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+    <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+    <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+</head>
+
+<body>
+	<header>
+		<div id="logo"><a href="https://nus.edu.sg/" target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+		<nav>  
+			<ul>
+				<li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+				<li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+				<li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / project / <a href="https://www.comp.nus.edu.sg/~guoyi/project/fyp2023/">fyp2023</a></strong>
+	</section>
+	<section id="pageContent">
+		<main_noaside role="main">
+			<article>
+				<h2>Implementation of Fuzzy Control Algorithm in Two-Wheeled Differential Drive Platform</h2><hr>
+				<p><strong>First Year Project [<a href="https://blog.nus.edu.sg/chenguoyi/modules/fyp2023/" target="_blank">FYP2023</a>] </strong><br>
+				<br>
+				<strong>Author: </strong> Chen Guoyi<br>
+				<strong>DOI: </strong><a href="https://arxiv.org/abs/2310.07748" target="_blank">arxiv.org/abs/2310.07748</a><br>
+				<strong>Link: </strong><a href="https://blog.nus.edu.sg/chenguoyi/implementation-of-fuzzy-control-algorithm-in-two-wheeled-differential-drive-platform/" target="_blank">Full Text [Blog@NUS]</a>
+				</p>
+			</article>
+			<article>
+			<h1>Abstract</h1>
+			<br>
+			<p>Designing and developing Artificial Intelligence controllers on separately dedicated chips have many advantages. This report reviews the development of a real-time fuzzy logic controller for optimizing locomotion control of a two-wheeled differential drive platform using an Arduino Uno board. Based on the Raspberry Pi board, fuzzy sets are used to optimize color recognition, enabling the color sensor to correctly recognize color at long distances, across a wide range of light intensity, and with high fault tolerance.</p>
+			<br>
+			<p><strong>Keywords:</strong> <i>fuzzy logic; fuzzy inference system; fuzzification; defuzzification; PID algorithm.</i></p>
+			<br>
+			<h1>Introduction</h1>
+			<br>
+			<p>This First Year Project (FYP) Report encapsulates my comprehensive academic journey throughout my first year at the National University of Singapore, aiming to illustrate a careful integration of concepts from modules ME3243/EE3305 Robotics System Design, EE4305 Fuzzy/Neural Systems for Intelligent Robotics, and CG2111A Engineering Principles and Practice. Through the practical application of these modules on the Arduino Uno & Raspberry Pi (RPi) robotic platform (Referred to as Robot ALEX in module CG2111A), I have engineered a rescue robot governed by fuzzy control algorithms.</p>
+			<br>
+			<p>In Module CG2111A, the rescue site is conceptualized as a Maze, where both the rescue robot and human operator do not have prior knowledge of the Maze's terrain. They can only identify the terrain through an onboard LiDAR system. The victim is represented by a green or red cylindrical object that can appear anywhere in the Maze. Since there are cylinders of other colors present in the Maze, the robot needs to determine the color of the cylinders to confirm whether they represent victims.</p>
+			<br>
+			<p>The fuzzy control algorithm optimizes the robot's locomotion and ability to identify victims. Chapters 1, 2, and 3 focus on locomotion, and Chapter 4 analyzes color recognition. Chapter 1 uses kinematic models and constraints to analyze the locomotion of the two-wheel differential drive platform, represented by the ALEX robot configuration. Chapter 2 employs the Proportional–Integral–Derivative (PID) control algorithm by using the equation of motion derived in Chapter 1 to optimize the ALEX robot's movement. Chapter 3 implements fuzzy control algorithms to refine the control accuracy of the PID algorithm. When the robot approaches a victim, it will utilize an optical color sensor to assess the victim's condition. Chapter 4 illustrates the optimization of the color-recognition process using a fuzzy algorithm. The acknowledgment, Guoyi’s First Adventure in Robotics, is the final part of this paper. It will narrate my learning journey in my Year 1 at the National University of Singapore.</p>
+			<br>
+			<h1>Chapter 1 Analysis of Locomotion</h1>
+			<br>
+			<p>As shown in Figure 1.1, the ALEX robot controls its locomotion by adjusting the driving velocity of two active wheels on both sides. If the left and right active wheels have the same driving velocity, then the robot stays static or travels in rectilinear motion; if the left and right active wheels have different driving velocities (namely, differential velocity), then the robot performs circular motion. ALEX is a two-wheeled differential robot based on the abovementioned motion characteristics. This research only examines the motion control system of two-wheeled differential robots represented by the ALEX configuration.</p>
+			<br>
+			<center><img src="https://www.comp.nus.edu.sg/~guoyi/project/fyp2023/img/Fig1.1.svg" width="300"></center>
+			<br>
+			<figcaption><strong>Fig 1.1</strong> Structural diagram is the top view of ALEX. This configuration consists of a left active wheel without steering capacity, denoted by \(L\), a right active wheel \(R\), and a passive wheel. The \(O_C\) point is the robot's spin center point, which is always located at the center point of the line connecting the pivot points of the \(L\) and \(R\) wheels. </figcaption>
+			<br>
+			<p>Before applying the fuzzy-PID theory to control ALEX, we first need to analyze its equation of motion to design its motion control system. The equation of motion consists of the forward equation of motion and the inverse equation of motion. The forward equation of motion calculates the movement velocity of the robot's spin center point using known driving velocities of the left and right active wheels. In contrast, the inverse equation of motion calculates the driving velocity of the left and right active wheels using the known movement velocity of the robot’s spin center point. This chapter will analyze the solutions to the forward and inverse equation of motion of ALEX. In Chapter 2, the PID control theory and the inverse equation of motion are applied to design the robot’s motion control system. Chapter 3 applies the forward equation of motion and the fuzzy control theory in tuning the motion control system.</p>
+			<br>
+			<p>Prior to solving the equation of motion, we need first establish the Global Reference Frame \(\xi_I\) and the Robot Local Reference Frame \(\xi_R\), as shown in Figure 1.2, to set the parameters of these equations.<p>
+			<br>
+			<center><img src="https://www.comp.nus.edu.sg/~guoyi/project/fyp2023/img/Fig1.2.svg" width="300"></center>
+			<br>
+			<figcaption><strong>Fig 1.2</strong> Global Reference Frame \(\xi_I\) and Robot Local Reference Frame \(\xi_R\). Angle \(\theta_I\) \((\theta_I\in{0 \leq \theta_I \leq 180^\circ})\) is the angle between the \(X_I\) axis of the \(\xi_I\) frame and the \(X_R\) axis of the \(\xi_R\) frame.  </figcaption>
+			<br>
+			<h2>1.1 Establishing the Global Reference Frame</h2>
+
+			In the Global Reference Frame, robotic motion can be regarded as a rigid body's motion on a two-dimensional plane, which can be decomposed into a translational movement with two degrees of freedom (DOFs) and a rotary motion with one DOF. Therefore, the robotic Global Reference Frame has three theoretical degrees of freedom (DOFworkspace). The robot's locational parameters in the Global Reference Frame can be set as a vector \( \xi_I = [x_I \ y_I  \ \theta_I]^T\) whose dimensions are the same as its degrees of freedom. Then, the velocity parameter of the robot in the Global Reference Frame can be set as the vector \( \dot{\xi}_I = [\dot{x}_I \ \dot{y}_I  \ \dot{\theta}_I]^T\).
+			
+			</article>
+		</main_noaside>
+	</section>
+	<footer>
+		<p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+		</p>
+	</footer>
+
+
+</body>
+
+</html>

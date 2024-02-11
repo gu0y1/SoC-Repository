@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-49C0EJEDEC');
+</script>
+
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+   
+    <title>Chen Guoyi - EE2026</title>
+    <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+    <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+    <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+<style>
+.code-output {
+  background-color: black;
+  color: green;
+  padding: 10px;
+  white-space: pre-wrap; 
+  word-break: break-all; 
+}
+  .display-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .segment-display {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 110px;
+    margin: 10px 0;
+  }
+  .segment-button, .dp-button{
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-color: #f0f0f0;
+    border: 1px solid #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .an-button {
+    width: 42px;
+    height: 30px;
+    margin: 3px;
+    background-color: #f0f0f0;
+    border: 1px solid #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .segment-button.active, .dp-button.active, .an-button.active {
+    background-color: red;
+  }
+  .horizontal {
+    width: 80px;
+  }
+  .vertical {
+    height: 80px;
+    margin: 0;
+  }
+  #anodes {
+    display: flex;
+    justify-content: center;
+  }
+  
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:0px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:0px 5px;word-break:normal;}
+.tg .tg-hfk9{background-color:#000000;border-color:#000000;text-align:left;vertical-align:top}
+
+</style>
+</head>
+
+<body>
+	<header>
+		<div id="logo"><a href="https://nus.edu.sg/" target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+		<nav>  
+			<ul>
+				<li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+				<li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+				<li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / project / <a href="https://www.comp.nus.edu.sg/~guoyi/project/ee2026/">ee2026</a> / <a href="https://www.comp.nus.edu.sg/~guoyi/project/ee2026/7generator">7generator</a></strong>
+	</section>
+	<section id="pageContent">
+		<main role="main">
+			<article>
+				<h2>Verilog Code Generator for 7-Segment Display</h2><hr>
+				<p><strong>Digital Design Project [<a href="https://nusmods.com/courses/EE2026/digital-design" target="_blank">EE2026</a>] </strong><br>
+				<br>
+				<strong>Author: </strong> Chen Guoyi<br>
+				<strong>GITHUB: </strong><a href="https://github.com/gu0y1/7-Segment-Display-Coder" target="_blank">https://github.com/gu0y1/7-Segment-Display-Coder</a><br>
+				</p>
+			</article>
+			<article>
+			<div class="instructions">
+  <h2>Instructions</h2>
+  <p>For <strong>xc7a35tcpg236-1 chip</strong> ONLY!</p><br>
+  <p>Welcome to the 7-Segment Display Code Generator! Follow these steps to create your Verilog code:</p>
+  <ol>
+    <li>Click the segment buttons (A-G) to toggle the LEDs on the 7-segment display. A red button indicates the LED is turned on.</li>
+    <li>Click the DP button to toggle the decimal point LED.</li>
+    <li>Select one or more anode buttons (AN0-AN3) to activate the corresponding displays. Multiple displays can show the same configuration simultaneously.</li>
+    <li>Once you have set up the desired configuration, click the "Generate Code" button to produce the Verilog code.</li>
+    <li>The generated Verilog code will appear at the bottom of the page, which you can then use in your digital design.</li>
+  </ol>
+  <p>Please note that this code generator assumes a common anode configuration for the 7-segment display.</p>
+</div>
+</article>
+</main>
+
+
+<aside>
+<div class="display-container">
+<div class="segment-display">
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-hfk9"></th>
+    <th class="tg-hfk9"><button class="segment-button horizontal" data-segment="A">A</button></th>
+    <th class="tg-hfk9"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-hfk9"><button class="segment-button vertical" data-segment="F">F</button></td>
+    <td class="tg-hfk9"></td>
+    <td class="tg-hfk9"><button class="segment-button vertical" data-segment="B">B</button></td>
+  </tr>
+  <tr>
+    <td class="tg-hfk9"></td>
+    <td class="tg-hfk9"><button class="segment-button horizontal" data-segment="G">G</button></td>
+    <td class="tg-hfk9"></td>
+  </tr>
+  <tr>
+    <td class="tg-hfk9"><button class="segment-button vertical" data-segment="E">E</button></td>
+    <td class="tg-hfk9"></td>
+    <td class="tg-hfk9"><button class="segment-button vertical" data-segment="C">C</button></td>
+  </tr>
+  <tr>
+    <td class="tg-hfk9"></td>
+    <td class="tg-hfk9"><button class="segment-button horizontal" data-segment="D">D</button></td>
+    <td class="tg-hfk9"><button class="dp-button" data-segment="DP">DP</button></td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div id="anodes">
+  <button class="an-button" data-anode="AN3">AN3</button>
+  <button class="an-button" data-anode="AN2">AN2</button>
+  <button class="an-button" data-anode="AN1">AN1</button>
+  <button class="an-button" data-anode="AN0">AN0</button>
+</div>
+<br>
+<center><strong>Pin Mapping Demo:</strong><br><br>
+<img src="https://www.comp.nus.edu.sg/~guoyi/project/ee2026/7generator/img/ssd.png" width="60%"><br><br></center>
+</aside>
+
+</div>
+</div>
+<section>
+<button id="generate">Generate Verilog Code</button>
+<hr>
+<pre id="verilogCode" class="code-output"></pre>
+<hr>
+<button id="generateXDC">Generate XDC File</button>
+<hr>
+<pre id="xdcCode" class="code-output"></pre>
+<hr>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Attach event listeners to segment buttons
+  document.querySelectorAll('.segment-button, .dp-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+  });
+
+  // Attach event listeners to anode buttons
+  document.querySelectorAll('.an-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+  });
+
+  // Generate Verilog button
+  document.getElementById('generate').addEventListener('click', generateVerilogCode);
+
+  // Generate XDC button
+  document.getElementById('generateXDC').addEventListener('click', generateXDCCode);
+});
+
+function generateVerilogCode() {
+  let segValues = Array(7).fill(1); // Defaults for segments (1 for common anode)
+  let dpValue = 1; // Default for decimal point
+  let anValues = Array(4).fill(1); // Defaults for anodes
+
+  // Check active segments and update segValues
+  document.querySelectorAll('.segment-button.active').forEach(btn => {
+    const segmentIndex = 'ABCDEFG'.indexOf(btn.dataset.segment);
+    segValues[segmentIndex] = 0; // Segment is on
+  });
+
+  // Check if decimal point is active
+  if (document.querySelector('.dp-button.active')) {
+    dpValue = 0; // Decimal point is on
+  }
+
+  // Check active anodes and update anValues
+  document.querySelectorAll('.an-button.active').forEach(btn => {
+    const anodeIndex = parseInt(btn.dataset.anode.substring(2), 10);
+    anValues[anodeIndex] = 0; // Anode is on
+  });
+
+  // Generate Verilog code
+  let verilogAssignments = `module main (
+  output [6:0] seg,  // 7-segment display segments (a-g)
+  output dp,         // Decimal point
+  output [3:0] an    // 7-segment display anodes (AN0-AN3)
+);\n\n`;
+
+  // Assignments for segments
+  segValues.forEach((value, index) => {
+    verilogAssignments += `assign seg[${index}] = ${value}; // Segment ${'ABCDEFG'[index]}\n`;
+  });
+
+  // Assignment for decimal point
+  verilogAssignments += `assign dp = ${dpValue}; // Decimal point\n`;
+
+  // Assignments for anodes
+  anValues.forEach((value, index) => {
+    verilogAssignments += `assign an[${index}] = ${value}; // AN${index}\n`;
+  });
+
+  verilogAssignments += "\nendmodule";
+
+  // Display generated code
+  document.getElementById('verilogCode').textContent = verilogAssignments;
+}
+
+function generateXDCCode() {
+  const xdcContent = `##7 Segment Display
+set_property -dict { PACKAGE_PIN W7   IOSTANDARD LVCMOS33 } [get_ports {seg[0]}]
+set_property -dict { PACKAGE_PIN W6   IOSTANDARD LVCMOS33 } [get_ports {seg[1]}]
+set_property -dict { PACKAGE_PIN U8   IOSTANDARD LVCMOS33 } [get_ports {seg[2]}]
+set_property -dict { PACKAGE_PIN V8   IOSTANDARD LVCMOS33 } [get_ports {seg[3]}]
+set_property -dict { PACKAGE_PIN U5   IOSTANDARD LVCMOS33 } [get_ports {seg[4]}]
+set_property -dict { PACKAGE_PIN V5   IOSTANDARD LVCMOS33 } [get_ports {seg[5]}]
+set_property -dict { PACKAGE_PIN U7   IOSTANDARD LVCMOS33 } [get_ports {seg[6]}]
+
+set_property -dict { PACKAGE_PIN V7   IOSTANDARD LVCMOS33 } [get_ports {dp}]
+
+set_property -dict { PACKAGE_PIN U2   IOSTANDARD LVCMOS33 } [get_ports {an[0]}]
+set_property -dict { PACKAGE_PIN U4   IOSTANDARD LVCMOS33 } [get_ports {an[1]}]
+set_property -dict { PACKAGE_PIN V4   IOSTANDARD LVCMOS33 } [get_ports {an[2]}]
+set_property -dict { PACKAGE_PIN W4   IOSTANDARD LVCMOS33 } [get_ports {an[3]}]`;
+
+  // Display XDC content
+  document.getElementById('xdcCode').textContent = xdcContent;
+}
+</script>
+
+<footer>
+		<p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+		</p>
+	</footer>
+
+
+</body>
+
+</html>
+
+</body>
+</html>
