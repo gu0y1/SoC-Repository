@@ -116,7 +116,66 @@
 				<br>
 				<p>This strategic formulation enables the robot to dynamically navigate its path by recalculating these forces at each step based on its present location, the goal's position, and the locations of nearby obstacles detected within its sensor range.</p>
 				</details>
+
+				<details>
+					<summary>/APF Visualization / <font color = "blue">potential_field_z.py</font></summary>
+					<br>
+
+    				<p>This Python script visualizes a combined potential field composed of both repulsive peaks and an attractive plane. The visualization focuses on a top-down view, showcasing the whole potential across a specified domain.</p>
+					<br>
+					<p>The script uses <code>numpy</code> for numerical operations and <code>matplotlib</code> for plotting. It defines a range for <code>x</code> and <code>y</code>, creates a meshgrid, and calculates the repulsive and attractive potentials separately. The total potential is a combination of these two, visualized in a top-down view to emphasize the whole potential landscape.</p>
+					<br>
+    				<h2>Prerequisites</h2>
+					<br>
+    				<ul>
+       					<li>Python 3.x</li>
+        				<li>numpy</li>
+        				<li>matplotlib</li>
+    				</ul>
+					<br>
+    				<h2>Mathematical Formulation</h2>
+					<br>
+    				<p>The repulsive potential is given by the formula:</p>
+    				<p>\[ Z_{\text{repulsive}} = \text{peak\_height} \cdot \left(e^{-(x - 0.5)^2 + (y - 0.5)^2} + e^{-(x + 0.5)^2 + (y + 0.5)^2}\right) \]</p>
+    				<p>The attractive potential is represented as a downward sloping plane:</p>
+    				<p>\[ Z_{\text{attractive}} = -0.5 \cdot (x - y) \]</p>
+    				<p>The total potential is the sum of these two components.</p>
+				</details>
+
+				<details>
+					<summary>/APF Visualization / <font color = "blue">potential_field.py</font></summary>
+					<br>
+					<p>This Python script demonstrates the visualization of attractive and repulsive potentials in a 3D space. It showcases how to calculate and visualize these potentials using numpy and matplotlib, including the creation of a 3D surface plot with a colorbar for the attractive potential.</p>
+					<br>
+    				<p>The script defines a domain using a meshgrid and calculates the attractive and repulsive potentials within this domain. The attractive potential is visualized in a 3D plot, emphasizing the gradient of potential across the space. This example focuses on the attractive potential, offering insights into its spatial variation.</p>
+					<br>
+    				<h2>Prerequisites</h2>
+					<br>
+    				<ul>
+        				<li>Python 3.x</li>
+        				<li>numpy</li>
+        				<li>matplotlib</li>
+    				</ul>
+
+					<br>
+    				<h2>Mathematical Formulation</h2>
+					<br>
+
+					<p>The mathematical model consists of two main components: the repulsive and attractive potentials.</p>
+
+					<p>The repulsive potential is defined by:</p>
+					<p>\[ Z_{\text{repulsive}} = \text{peak\_height} \cdot \left(e^{-((X - 1)^2 + (Y - 1)^2)} + e^{-((X + 1)^2 + (Y + 1)^2)}\right) \]</p>
+					<p>where \( \text{peak\_height} \) determines the height of the peaks, and \( (X, Y) \) are the coordinates over the defined domain. This component creates two high, steep peaks at positions \((1, 1)\) and \((-1, -1)\).</p>
+
+					<p>The attractive potential is simpler, represented by a linear slope in the Y direction:</p>
+					<p>\[ Z_{\text{attractive}} = -0.5 \cdot Y \]</p>
+					<p>This creates a plane that slopes downwards along the Y-axis, modeling an attractive force that increases with Y.</p>
+
+					<p>The total potential visualized is the sum of these two components, providing insight into how the combined potential landscape would look in a physical system.</p>
+				</details>
 			</article>
+
+			
 			
 		</main_noaside>
 	</section>
