@@ -330,8 +330,10 @@ function calculateGameDataHash() {
         hash = (hash << 5) - hash + char;
         hash |= 0; // Convert to 32bit integer
     }
-    return hash;
+    // 将哈希值转换为十六进制格式并返回
+    return hash.toString(16);
 }
+
 
 function saveGameData() {
     let csvContent = "data:text/csv;charset=utf-8,";
@@ -347,16 +349,19 @@ function saveGameData() {
 
 function downloadCSV() {
     let csvContent = saveGameData();
+    let hashValue = calculateGameDataHash(); // 获取哈希值
     let encodedUri = encodeURI(csvContent);
+    let fileName = `${formatDate()}-${hashValue}.csv`; // 将哈希值添加到文件名中
     let link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `${formatDate()}.csv`);
+    link.setAttribute("download", fileName);
     link.style.display = 'none'; // 隐藏元素
 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
+
 
     // 格式化当前日期时间
     function formatDate() {
@@ -372,13 +377,16 @@ function downloadCSV() {
 // 生成CSV文件的超链接
 function generateCSVLink() {
     let csvContent = saveGameData();
+    let hashValue = calculateGameDataHash(); // 获取哈希值
     let encodedUri = encodeURI(csvContent);
+    let fileName = `${formatDate()}-${hashValue}.csv`; // 将哈希值添加到文件名中
     let link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `${formatDate()}.csv`);
-    link.textContent = "CSV Dataset"; // 超链接显示的文本
+    link.setAttribute("download", fileName);
+    link.textContent = fileName; // 超链接显示的文本为文件名
     return link;
 }
+
 
 function displayGameOverMessage() {
     let gameOverDiv = document.getElementById('gameOverMessage');
@@ -388,7 +396,7 @@ function displayGameOverMessage() {
 
     // 添加提示语句
     let hintSpan = document.createElement("span");
-    hintSpan.textContent = "You success! Please combine the ";
+    hintSpan.textContent = "You success! Please download the ";
 
     // 添加CSV文件的超链接
     hintSpan.appendChild(csvLink);
