@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let dy = robot.y - (obstacle.y + obstacle.size / 2);
             let distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < obstacle.size / 2 + 10) {
+				displayGameOverMessage(false);
                 robot.alive = false;
             }
         });
@@ -388,41 +389,67 @@ function generateCSVLink() {
 }
 
 
-function displayGameOverMessage() {
+function displayGameOverMessage(success) {
     let gameOverDiv = document.getElementById('gameOverMessage');
     gameOverDiv.innerHTML = ''; // 清空游戏结束信息
 
-    let csvLink = generateCSVLink(); // 生成CSV文件的超链接
+    if (success) {
+        // 添加成功信息
+        let successMessage = document.createElement("span");
+        successMessage.textContent = "Success! Please download ";
 
-    // 添加提示语句
-    let hintSpan = document.createElement("span");
-    hintSpan.textContent = "You success! Please download the ";
+        // 添加CSV文件的超链接
+        let csvLink = generateCSVLink();
+        successMessage.appendChild(csvLink);
 
-    // 添加CSV文件的超链接
-    hintSpan.appendChild(csvLink);
+        // 添加文本
+        successMessage.appendChild(document.createTextNode(" with the Hash Value "));
 
-    // 添加文本
-    hintSpan.appendChild(document.createTextNode(" with the Hash Value "));
+        // 添加哈希值
+        let hashValueSpan = document.createElement("span");
+        hashValueSpan.textContent = calculateGameDataHash();
+        successMessage.appendChild(hashValueSpan);
 
-    // 计算并添加哈希值
-    let hashValueSpan = document.createElement("span");
-    hashValueSpan.textContent = calculateGameDataHash();
-    hintSpan.appendChild(hashValueSpan);
+        // 添加文本
+        successMessage.appendChild(document.createTextNode(", please send .csv to "));
 
-    // 添加文本
-    hintSpan.appendChild(document.createTextNode(", send them to "));
+        // 添加邮件超链接
+        let emailLink = document.createElement("a");
+        emailLink.setAttribute("href", "mailto:guoyi@comp.nus.edu.sg");
+        emailLink.textContent = "guoyi@comp.nus.edu.sg.";
 
-    // 添加邮件超链接
-    let emailLink = document.createElement("a");
-    emailLink.setAttribute("href", "mailto:guoyi@comp.nus.edu.sg");
-    emailLink.textContent = "guoyi@comp.nus.edu.sg.";
+        // 将邮件超链接添加到成功信息中
+        successMessage.appendChild(emailLink);
 
-    // 将邮件超链接添加到提示语句中
-    hintSpan.appendChild(emailLink);
+        // 将成功信息添加到游戏结束信息中
+        successMessage.style.color = 'green'; // 设置成功信息的字体颜色为绿色
+        gameOverDiv.appendChild(successMessage);
+    } else {
+    // 添加失败信息
+    let failureMessage = document.createElement("span");
+    failureMessage.textContent = "Game Over! Your robot has no chance to survive! You can ";
 
-    // 将提示语句添加到游戏结束信息中
-    gameOverDiv.appendChild(hintSpan);
+    // 创建重新开始游戏的超链接
+    let restartLink = document.createElement("a");
+    restartLink.textContent = "REPLAY";
+    restartLink.href = window.location.href; // 设置超链接地址为当前页面地址，即刷新页面
+
+    // 创建学习游戏玩法的超链接
+    let guideLink = document.createElement("a");
+    guideLink.textContent = "Learn how to play!";
+    guideLink.href = "https://www.comp.nus.edu.sg/~guoyi/project/urop/training/"; // 设置超链接地址为游戏玩法介绍页面
+
+    // 将超链接添加到失败信息中
+    failureMessage.appendChild(restartLink);
+    failureMessage.appendChild(document.createTextNode(" or "));
+    failureMessage.appendChild(guideLink);
+
+    // 将失败信息添加到游戏结束信息中
+    failureMessage.style.color = 'red'; // 设置失败信息的字体颜色为红色
+    gameOverDiv.appendChild(failureMessage);
 }
+}
+
 
 
 
@@ -443,7 +470,7 @@ function displayGameOverMessage() {
         let distanceToEndPoint = Math.sqrt((endPoint.x - robot.x) ** 2 + (endPoint.y - robot.y) ** 2);
         if (distanceToEndPoint < endPoint.size / 2) {
 			downloadCSV();
-			displayGameOverMessage();
+			displayGameOverMessage(true);
             robot.alive = false; // 停止游戏
         }
 
