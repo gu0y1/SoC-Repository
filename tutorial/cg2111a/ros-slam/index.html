@@ -1,0 +1,292 @@
+<!doctype html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-49C0EJEDEC');
+</script>
+<style>
+   .waiting { color: orange; }
+   .completed { color: green; }
+   .check{
+   border-width:5px;
+   border-style:solid;
+   border-color:gray;
+   }
+   .warning{
+   border-width:5px;
+   border-style:solid;
+   border-color:red;
+   }
+   .debug{
+   border-width:5px;
+   border-style:solid;
+   border-color:purple;
+   }
+   .bonus{
+   border-width:5px;
+   border-style:solid;
+   border-color:purple red green blue;
+   }
+</style>
+<html lang="en" class="no-js">
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>Chen Guoyi - CG2111A Tutorial</title>
+      <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+      <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+      <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+      <link href="https://comp.nus.edu.sg/~guoyi/src/prism.css" rel="stylesheet" />
+   </head>
+   <body>
+      <header>
+         <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+         <nav>
+            <ul>
+               <li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+               <li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+               <li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+            </ul>
+         </nav>
+      </header>
+      <section>
+         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / tutorial / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a">cg2111a</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">ros-slam</a></strong>
+      </section>
+      <section id="pageContent">
+         <main role="main">
+            <article>
+               <h1>Tutorial: Robot Operating System for EPP2</h1>
+               <hr>
+               <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target="_blank">CG2111A</a>] </strong><br>
+                  <br>
+                  <strong>Author: </strong> Chen Guoyi<br>
+                  <strong>Supervisors: </strong>Boyd Anderson; Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
+               </p>
+            </article>
+         </main>
+         <aside>
+            <div>
+               <center>
+                  <br><br>
+                  <strong>Directory: </strong><br><br>
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td></td>
+                           <td colspan="3"><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros">Tutorial Homepage</a></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">1. Setup ROS on RPi 4</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">2. Talker & Listener</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>&#10148;</td>
+                           <td>├</td>
+                           <td>&nbsp;3. RPi LiDAR & SLAM</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">4. ROS Networking</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>└</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">References</a></td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <br><br><br>
+            </div>
+            </center>
+         </aside>
+         <main_noaside role="main">
+            <article>
+               <center>
+                  <h1>Raspberry Pi LiDAR & SLAM</h1>
+               </center>
+               <br>
+               <h2><strong>0. Introduction to SLAM</strong></h2>
+               <p>For a mobile robot platform, two of the main tasks associated with navigation are <strong>mapping</strong> and <strong>localization</strong>. Mapping involves constructing the floor plan of the robot's immediate surroundings, while localization refers to identifying the robot's location on that map. Though each can be solved individually with a number of solutions, solving both simultaneously presents a unique challenge—and an engaging one at that.</p>
+               <p>Consider our ALEX being used for the first time in an unexplored environment. Without a pre-existing map, the ALEX must navigate to create one. This presents a "chicken and egg" problem: navigation requires a map, but to create a map, the robot must navigate. Enter <strong>S</strong>imultaneous <strong>L</strong>ocalization <strong>A</strong>nd <strong>M</strong>apping (SLAM), a set of algorithms designed to tackle both challenges concurrently. SLAM remains a vibrant area of research, constantly evolving with new optimizations and methodologies.</p>
+               <p>While implementing a SLAM algorithm might be complex at this stage, understanding its core principles is intuitive. Below, we provide a high-level overview of SLAM's main steps, accompanied by a brief glossary of common terms:</p>
+               <h3>0.1 Common SLAM Terms</h3>
+               <ul>
+                  <li><strong>Odometry/Telemetry:</strong> Information about the robot's position, typically derived from motor controls.</li>
+                  <li><strong>Landmark:</strong> Stable, re-observable environmental features that are distinguishable. Examples include walls and large furniture.</li>
+               </ul>
+               <h3>0.2 Main Steps of a Typical SLAM Algorithm</h3>
+			   <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam/img/SLAM_intro.jpg" width=40%></center>
+               <ul>
+                  <li><strong>A1 Extract Landmarks:</strong> Analyze data from sensors (like LiDAR) to identify potential landmarks. Techniques vary, such as grouping close data points or detecting abrupt changes that signify an edge.</li>
+                  <li><strong>A2 Data Association:</strong> Match observed data points to known landmarks, accounting for variations in sensor readings across different scans.</li>
+                  <li><strong>B1 Estimate Location:</strong> Use movement data (e.g., from motor controls) to estimate the robot's current location. Given the potential inaccuracies in control data, these estimates are not always reliable.</li>
+                  <li><strong>B2 Re-observe Landmarks:</strong> Compare the estimated location with new observation data to refine the robot's perceived position.</li>
+                  <li><strong>B3 Update Map:</strong> Expand the map with new observations, enhancing it for future navigation cycles.</li>
+               </ul>
+               <p>Among the SLAM variants, <strong>GMapping</strong> and <strong>Hector SLAM</strong> are particularly notable. Hector SLAM, interestingly, does not rely on odometry data for localization. Instead, it matches new observations with the existing map to deduce the robot's movement. This approach facilitates unique applications, such as handheld or drone mapping devices, though it requires careful pacing to accommodate Hector SLAM's processing capabilities.</p>
+			   
+			   <p>In CG2111A, we will implement the <strong>Hector SLAM</strong>.
+			   
+               <br><br>
+               <h2><strong>1. Setup SLAM Environment on your Raspberry Pi</strong></h2>
+               <div class="warning">
+                  <strong style="color:white; background-color:red;">Warning!&nbsp;</strong>
+                  <p>If you're utilizing the OS image prepared by Prof. Boyd, you can bypass Section 1 entirely, as the SLAM libraries have already been pre-installed on your Raspberry Pi.</p>
+                  <p>However, if you've set up your ROS from scratch following <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">Tutorial 1: Setup ROS on RPi 4</a>, you’ll find the information in this section essential.</p>
+               </div>
+               <br>
+               <h3>1.1 Adding Required Packages and Building Again</h3>
+               <p>First, you need to initialize the ROS environment variables. Open a terminal and execute the following command:</p>
+               <pre><code class="language-sh">source /opt/ros/noetic/setup.bash</code></pre>
+               <p>Next, use the <code class="language-sh">rosinstall_generator</code> tool to fetch the installation information for the <code class="language-sh">rplidar_ros</code>, <code class="language-sh">hector_slam</code>, and <code class="language-sh">rqt_graph</code> packages, and merge them into the <code class="language-sh">src</code> directory of your workspace. Execute the following command:</p>
+               <pre><code class="language-sh">rosinstall_generator rplidar_ros hector_slam rqt_graph --rosdistro noetic --deps --wet-only --tar | wstool merge -t src -
+wstool update -t src -j8</code></pre>
+
+				<p>Then, install <code class="language-sh">OpenCV</code> Python Libraries, because we need its sub-library <code class="language-sh">cv_bridge</code> to build our workspace:</p>
+				
+				<pre><code class="language-sh">sudo apt-get install libopencv-dev python3-opencv</code></pre>
+
+
+               <p>Then, build your workspace using the <code class="language-sh">catkin_make_isolated</code> command to ensure Python 3 is used. Execute the following command:</p>
+               <pre><code class="language-sh">sudo src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3</code></pre><br>
+			   <div class="debug">
+                  <strong style="color:white; background-color:purple;">Debugging Time&nbsp;</strong>
+                  <p>Note: If you encounter error messages: <code class="language-sh">Command failed, exiting.</code> like this:</p>
+				  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam/img/error_opencv.png" width=40%></center>
+
+				  <p>This error occurs because we did not install dependencies for OpenCV. Because we will not use OpenCV for our task, so we can elegantly ignore this error and continue.</p>
+               </div>
+               <br><br>
+               <h3>
+               1.2 Creating a New Workspace and Building</h2>
+               <p>To start working with the new workspace, you first need to initialize its environment variables. Execute the following command:</p>
+               <pre><code class="language-sh">source /opt/ros/noetic/setup.bash</code></pre>
+               <p>Then, create a new workspace and its <code class="language-sh">src</code> directory. Execute the following commands:</p>
+               <pre><code class="language-sh">mkdir -p ~/cg2111a/src
+cd ~/cg2111a
+catkin_init_workspace src</code></pre>
+               <p>Afterwards, enter the <code class="language-sh">src</code> directory, clone the <code class="language-sh">rplidar_ros</code> package, and switch to the <code class="language-sh">slam</code> branch. Execute the following commands:</p>
+               <pre><code class="language-sh">cd src
+git clone https://github.com/robopeak/rplidar_ros.git
+cd rplidar_ros
+git checkout slam
+cd ../..</code></pre>
+               <p>Finally, build the entire workspace using the <code class="language-sh">catkin_make</code> command. Execute the following command:</p>
+               <pre><code class="language-sh">catkin_make</code></pre>
+               <p>Following these steps, you should have successfully set up the ROS environment, including the required <code class="language-sh">rplidar_ros</code>, <code class="language-sh">hector_slam</code>, and <code class="language-sh">rqt_graph</code> packages, as well as a new workspace. If you encounter any issues during any of the steps, make sure to check the commands for accuracy and that all dependencies are installed.</p>
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check by running the codes in this section; you received no warnings or errors. </p>
+                  <p>Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task1"><label for="task1" class="status waiting">Waiting Complete</label></p>
+               </div>
+               <br><br>
+               <h3>C5. Running Hector SLAM under ROS</h3>
+<p><strong>Key idea:</strong> We are going to compile and run multiple ROS nodes in this section. Essentially, we need:</p>
+<ul>
+    <li>A RPLidar node to broadcast the LiDAR readings.</li>
+    <li>A SLAM node to use LiDAR readings for environment mapping.</li>
+    <li>A Visualization node to render the environment map.</li>
+</ul>
+<p>Other than (c), where we will be using a standard ROS visualization node, known as rviz, we will have to compile and run (a) and (b) on our own.</p>
+
+<h4>Compiling RPLidar ROS node</h4>
+<ol>
+    <li>Open a terminal and write <code class="language-sh">source /opt/ros/noetic/setup.bash</code></li>
+    <li>cd ~/cg2111a<br>You can browse around to see the structure of the folder: cg2111a/src/rplidar_ros/</li>
+    <li>Enter <code class="language-sh">catkin_make</code></li>
+</ol>
+<p><code>catkin_make</code> is a project building utility (similar to "make"), which is configured to look for directories under the src/ sub-folder and build them one by one. In this case, there is only one package, namely "rplidar_ros". You should see compilation messages on screen. There may be a few compilation warnings which you can safely ignore.</p>
+
+<ol start="4">
+    <li>Now open a new terminal and write <code class="language-sh">source /opt/ros/noetic/setup.bash</code><br>Remember to perform this step if you open a new terminal. Alternatively, you can add this line to the end of .bashrc under the /home/pi folder.</li>
+    <li>Plug in your RPLidar A1 unit, then run the following two commands in two separate terminals:<br><code class="language-sh">roslaunch rplidar_ros rplidar.launch</code><br><code class="language-sh">rosrun rplidar_ros rplidarNodeClient</code><br>On the terminal that executed the second command, you should see RPLidar readings.</li>
+    <li>Once you verified that the RPLidar readings are shown, you can safely close all terminals.</li>
+</ol>
+
+<h4>Running a Hector SLAM ROS node</h4>
+<p>Hello Hector! As discussed earlier, there are many SLAM variants. We have chosen Hector SLAM for our studio as it does not require odometry data.</p>
+<ol>
+    <li>Open a terminal</li>
+    <li>Run <code class="language-sh">source ~/cg2111a/devel/setup.bash</code></li>
+    <li>Now, this is the moment of truth. Execute:<br><code class="language-sh">roslaunch rplidar_ros view_slam.launch</code></li>
+    <li>You should see a map generated by the visualizer program rviz.</li>
+    <li>Slowly rotate the RPLidar A1 unit on the spot and observe the map. You should see the map is being refined continuously. If you have a wifi setup with Pi, you are encouraged to move the RPLidar unit around in the lab slowly and see how the map builds up.</li>
+    <li>To understand the ROS nodes involved in this process, you can open a new terminal and run:<br><code class="language-sh">rosrun rqt_graph rqt_graph</code></li>
+</ol>
+<p>You can see that rplidarNode broadcast the LiDAR reading for the hector mapping node to perform SLAM algorithm. Note the rviz node is not shown. Let’s now add the current estimated location of our robot in the map to rviz. In rviz, click [Add] in the bottom left hand corner, and select Pose. Set the topic of the pose to be /slam_out_pose, this is the localisation broadcast topic from our SLAM algorithm. You can now see on the map where the SLAM algorithm believes the robot is!</p>
+<p>Now let’s get things back up and running with Alex: try getting your original code back up to drive your robot around!</p>
+
+               
+               <center>
+                  <h1>· End of Tutorial · </h1>
+               </center>
+               <hr>
+               <div class="bonus">
+                  <strong style="color:black; background-color:yellow;">★ Bonus Time!&nbsp;</strong>
+                  <center>
+                     <h1><font color = "green">You have done <span id="completedCount">0</span> out of 6!</font></h1>
+                  </center>
+                  <p>Hip hip hooray! You have successfully set up ROS on your Raspberry Pi by yourself! We highly recommend trying out the Listener & Talker in ROS to test its functionality. Detailed instructions will be provided in the next section.</p>
+               </div>
+               <hr>
+               <br>
+               <h2> References:</h2>
+               <ul>
+                  <li> Prof. Boyd Anderson; CG2111A, AY22/23 Semester II;
+               </ul>
+            </article>
+         </main_noaside>
+      </section>
+      <footer>
+         <p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+         </p>
+      </footer>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const checkboxes = document.querySelectorAll('.task-checkbox');
+         
+             checkboxes.forEach(function(checkbox) {
+                 const label = checkbox.nextElementSibling; // 获取复选框旁边的label
+                 checkbox.addEventListener('change', function() {
+                     if (this.checked) {
+                         label.textContent = 'Marked as completed';
+                         label.classList.remove('waiting');
+                         label.classList.add('completed');
+                     } else {
+                         label.textContent = 'Waiting Complete';
+                         label.classList.remove('completed');
+                         label.classList.add('waiting');
+                     }
+                     updateCompletedCount();
+                 });
+             });
+         
+             function updateCompletedCount() {
+                 const completedCount = document.querySelectorAll('.task-checkbox:checked').length;
+                 document.getElementById('completedCount').textContent = completedCount;
+             }
+         });
+      </script>
+      <script src="https://comp.nus.edu.sg/~guoyi/src/prism.js"></script>
+   </body>
+</html>
