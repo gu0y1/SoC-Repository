@@ -1,0 +1,374 @@
+<!doctype html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-49C0EJEDEC');
+</script>
+<style>
+   .waiting { color: orange; }
+   .completed { color: green; }
+   .check{
+   border-width:5px;
+   border-style:solid;
+   border-color:gray;
+   }
+   .warning{
+   border-width:5px;
+   border-style:solid;
+   border-color:red;
+   }
+   .debug{
+   border-width:5px;
+   border-style:solid;
+   border-color:purple;
+   }
+   .bonus{
+   border-width:5px;
+   border-style:solid;
+   border-color:purple red green blue;
+   }
+</style>
+<html lang="en" class="no-js">
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>Chen Guoyi - CG2111A Tutorial</title>
+      <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+      <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+      <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+      <link href="https://comp.nus.edu.sg/~guoyi/src/prism.css" rel="stylesheet" />
+   </head>
+   <body>
+      <header>
+         <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+         <nav>
+            <ul>
+               <li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+               <li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+               <li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+            </ul>
+         </nav>
+      </header>
+      <section>
+         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / tutorial / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a">cg2111a</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">ros-network</a></strong>
+      </section>
+      <section id="pageContent">
+         <main role="main">
+            <article>
+               <h1>Tutorial: Robot Operating System for EPP2</h1>
+               <hr>
+               <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target="_blank">CG2111A</a>] </strong><br>
+                  <br>
+                  <strong>Author: </strong> Chen Guoyi<br>
+                  <strong>Supervisors: </strong>Boyd Anderson; Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
+               </p>
+            </article>
+         </main>
+         <aside>
+            <div>
+               <center>
+                  <br><br>
+                  <strong>Directory: </strong><br><br>
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td></td>
+                           <td colspan="3"><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros">Tutorial Homepage</a></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">1. Setup ROS on RPi 4</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">2. Talker & Listener</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">3. RPi LiDAR & SLAM</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>&#10148;</td>
+                           <td>├</td>
+                           <td>&nbsp;4. ROS Networking</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>└</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">References</a></td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <br><br><br>
+            </div>
+            </center>
+         </aside>
+         <main_noaside role="main">
+            <article>
+               <center>
+                  <h1>ROS Networking (Optional)</h1><br>
+				  <i> Your first taste of Internat of Things!</i>
+               </center>
+			   
+			   <p>This tutorial requires students to have a solid understanding of ROS topics and the communication between them. Therefore, before diving into this tutorial, we highly recommend completing <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Tutorial 2: Talker & Listener</a> to familiarize yourself with the communications between topics and nodes.</p>
+
+<p>In this tutorial, we'll establish a ROS network that enables LiDAR data to be rendered remotely on our own PC instead of the Raspberry Pi. To achieve this, a comprehensive understanding of the communication architecture we're going to implement is essential:</p>
+
+<h2><strong>0. ROS Networking Architecture</strong></h2>
+<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network/img/architecture.png" width=80%></center>
+
+<p>We will run two instances of ROS concurrently, one on our Raspberry Pi and another on our PC. The ROS instance on the Raspberry Pi will act as a talker, receiving LiDAR data in the format <code class="language-sh">[INFO][TIME STAMP][ANGLE, DISTANCE]</code>. This data will then be broadcast over port 11311. Meanwhile, the ROS instance on our PC will serve as a listener, tuning into port 11311 using the Raspberry Pi's IP address. The data received from the ROS instance on the Raspberry Pi will maintain the format <code class="language-sh">[INFO][TIME STAMP][ANGLE, DISTANCE]</code>, which we will then visualize using Python libraries or rviz.</p>
+
+<h2><strong>1. Setup ROS on your PC</strong></h2>
+
+<div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check whether you have already installed Ubuntu 20.04 (Focal Fossa) on your PC (or virtual machine).</p>
+<p>If you have not, as a computer engineering student, we trust you have the skills to install Ubuntu 20.04 LTS on your own with the help of available online resources!</p>
+
+                     <input type="checkbox" class="task-checkbox" id="task1"><label for="task1" class="status waiting">Waiting Complete</label>
+                  </p>
+               </div>
+			   <br>
+			   
+			   
+			   
+			   <h3>1.1 Setup your sources.list</h3>
+<p>Configure your computer to accept software from packages.ros.org:</p>
+<pre><code class="language-sh">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'</code></pre><br>
+
+<h3>1.2 Set up your keys</h3>
+<p>Ensure your package index is up-to-date:</p>
+<pre><code class="language-sh">sudo apt update</code></pre>
+<p>Install curl if it's not already installed and set up the repository keys:</p>
+<pre><code class="language-sh">sudo apt install curl
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -</code></pre><br>
+
+<h3>1.3 Installation</h3>
+<p>Ensure your package index is up-to-date <strong>(YES! You need run this command again!)</strong>:</p>
+<pre><code class="language-sh">sudo apt update</code></pre>
+<p>Install ROS Noetic Desktop (includes ROS-Base plus tools like rqt and rviz):</p>
+<pre><code class="language-sh">sudo apt install ros-noetic-desktop</code></pre><br>
+
+
+<h3>1.4 Environment setup</h3>
+<p>Source the ROS setup script in every bash terminal you use ROS in:</p>
+<pre><code class="language-sh">source /opt/ros/noetic/setup.bash</code></pre>
+<p>To automatically source this script in all new shells:</p>
+<pre><code class="language-sh">echo "source /opt/ros/noetic/setup.bash" &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre><br>
+
+<h3>1.5 Dependencies for building packages</h3>
+<p>To install tools and dependencies for building ROS packages:</p>
+<pre><code class="language-sh">sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential</code></pre><br>
+  
+<h3>1.6 Initialize rosdep</h3>
+<p>Before using many ROS tools, initialize rosdep, a tool for installing system dependencies:</p>
+<pre><code class="language-sh">sudo apt install python3-rosdep
+sudo rosdep init
+rosdep update</code></pre>
+
+<br>
+
+<h2><strong>2. Activate ROS and LiDAR Node on Raspberry Pi</strong></h2>
+		   <p>First, turn on your Raspberry Pi (RPi) and connect the LiDAR sensor. Then, open a terminal on your RPi and initiate the ROS master with the command:</p>
+<pre><code class="language-sh">source ~/cg2111a/devel/setup.bash
+roscore</code></pre>
+<p>Remember, only one ROS master is required for your network.</p>
+<p>Assuming your RPi's IP address is <code class="language-sh">192.168.?.?</code> and you have installed the <code class="language-sh">rplidar_ros</code> package (if not installed, navigate to <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">Tutorial 3: RPi LiDAR & SLAM</a>, section 1), follow these steps to configure and launch the LiDAR:</p>
+<ol>
+    <li>Open a new terminal on your RPi.</li>
+    <li>Set the ROS master URI by running:</li>
+    <pre><code class="language-sh">export ROS_MASTER_URI=http://192.168.?.?:11311</code></pre>
+    <li>Launch the <code class="language-sh">rplidar_ros</code> package:</li>
+    <pre><code class="language-sh">roslaunch rplidar_ros rplidar.launch</code></pre>
+</ol>
+<p>This setup will configure your RPi to serve as the ROS master, broadcasting LiDAR data to any connected nodes on the network.</p>
+
+<p>DO NOT Terminate this terminal, since once it closed, the server is killed.</p>
+
+<h2><strong>3. Activate ROS on PC</strong></h2>
+<p>Before we start activation, we need build a workspace:
+
+<h3>
+               3.1 Creating a New Workspace and Building</h2>
+               <p>To start working with the new workspace, you first need to initialize its environment variables. Execute the following command:</p>
+               <pre><code class="language-sh">source /opt/ros/noetic/setup.bash</code></pre>
+               <p>Then, create a new workspace and its <code class="language-sh">src</code> directory. Execute the following commands:</p>
+               <pre><code class="language-sh">mkdir -p ~/cg2111a/src
+cd ~/cg2111a
+catkin_init_workspace src</code></pre>
+               <p>Afterwards, enter the <code class="language-sh">src</code> directory, clone the <code class="language-sh">rplidar_ros</code> package, and switch to the <code class="language-sh">slam</code> branch. Execute the following commands:</p>
+               <pre><code class="language-sh">cd src
+git clone https://github.com/robopeak/rplidar_ros.git
+cd rplidar_ros
+git checkout slam
+cd ../..</code></pre>
+               <p>Finally, build the entire workspace using the <code class="language-sh">catkin_make</code> command. Execute the following command:</p>
+               <pre><code class="language-sh">catkin_make</code></pre>
+               <p>Following these steps, you should have successfully set up the ROS environment, including the required <code class="language-sh">rplidar_ros</code>, <code class="language-sh">hector_slam</code>, and <code class="language-sh">rqt_graph</code> packages, as well as a new workspace. If you encounter any issues during any of the steps, make sure to check the commands for accuracy and that all dependencies are installed.</p>
+
+<p>On your laptop, follow these steps to access the LiDAR data being broadcast by your Raspberry Pi:</p>
+
+<ol>
+    <li>Open a terminal on your laptop.</li>
+    <li>Connect to the ROS master running on your RPi by setting the <code>ROS_MASTER_URI</code> environment variable:</li>
+    <pre><code class="language-sh">export ROS_MASTER_URI=http://192.168.?.?:11311</code></pre>
+    <li>To verify that your laptop can see the ROS topics from the RPi, run:</li>
+    <pre><code class="language-sh">rostopic list</code></pre>
+    <p>This command should display a list of all ROS topics active on your RPi.</p>
+    <li>To receive LiDAR data on your laptop, set the ROS master URI again in a new terminal (to ensure the environment variable is set correctly) and run the rplidar node client:</li>
+    <pre><code class="language-sh">export ROS_MASTER_URI=http://192.168.?.?:11311
+rosrun rplidar_ros rplidarNodeClient</code></pre>
+</ol>
+
+<p>After executing these steps, you should see the LiDAR data being sent to your laptop, allowing you to work with real-time information from the sensor connected to your RPi. Here is a demostration:</p>
+
+<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network/img/client.gif" width=80%></center>
+
+<br>
+
+<h2><strong>4. Visualize Mapping Data Using Python on PC</strong></h2>
+<p>You may find that data formatted as <code class="language-sh">[INFO][TIME STAMP][ANGLE, DISTANCE]</code> is difficult for humans to interpret regarding the terrain surrounding the ALEX robot. To address this, we can utilize a Python script to render the LiDAR data into a real-time map, making it much easier to visualize the environment. Below is the Python code to achieve this. Please make sure you have installed all the necessary libraries before running this script.</p>
+
+<p>You can install the required libraries using pip, Python's package installer, by running the following command in your terminal:</p>
+<pre><code class="language-sh">pip install matplotlib numpy</code></pre>
+
+<p>Before running the provided Python script, make sure you replace the <code class="language-sh">RPi_IP</code> with real IP address of your Raspberry Pi<p>
+<p>Now, you can run the script provided to render a real-time map from the LiDAR data. Here's the script:</p>
+
+<pre><code class="language-py">import subprocess
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import numpy as np
+import re
+import threading
+
+# Initialize Mapping
+fig = plt.figure()
+ax = plt.subplot(111, projection='polar')
+ax.set_ylim(0, 10)  # Maximum Distance of LiDAR Data
+
+angles = np.linspace(0, 2 * np.pi, 360)
+distances = np.full(angles.shape, np.inf)
+
+def parse_data_line(line):
+    """Retrieve data from ROS Terminal"""
+    match = re.search(r"\[ INFO\] \[\d+\.\d+\]: : \[(\d+\.\d+), (\d+\.\d+|inf)\]", line)
+    if match:
+        angle = float(match.group(1))
+        distance = float(match.group(2)) if match.group(2) != 'inf' else np.inf
+        return angle, distance
+    return None, None
+
+def update_plot(frame):
+    """Update Mapping"""
+    ax.clear()
+    valid_indices = np.isfinite(distances)
+    ax.scatter(angles[valid_indices], distances[valid_indices], s=10)
+    ax.set_ylim(0, 10)
+
+def fetch_ros_data():
+    """Retrieve data from ROS Node, and update globle 'distance' array"""
+    # You need change the IP address to your RPi IP Address!!!
+    cmd = "source ~/cg2111a/devel/setup.bash && " \
+          "export ROS_MASTER_URI=http://RPi_IP:11311 && " \
+          "rosrun rplidar_ros rplidarNodeClient"
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, text=True, bufsize=1, executable='/bin/bash')
+    
+    for line in iter(process.stdout.readline, ''):
+        angle, distance = parse_data_line(line)
+        if angle is not None and distance is not None:
+            angle_rad = np.radians(angle % 360)
+            index = int((angle_rad / (2 * np.pi)) * len(angles))
+            distances[index] = distance
+
+if __name__ == '__main__':
+    # Read and process ROS data
+    threading.Thread(target=fetch_ros_data, daemon=True).start()
+
+    # build animation
+    ani = FuncAnimation(fig, update_plot, interval=100)
+    plt.show()
+
+</code></pre>
+
+<p>Here is a demostration:</p>
+
+<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network/img/py.gif" width=80%></center>
+
+<br>
+
+
+
+
+               
+               <center>
+                  <h1>· End of Tutorial · </h1>
+               </center>
+               <hr>
+               <div class="bonus">
+                  <strong style="color:black; background-color:yellow;">★ Bonus Time!&nbsp;</strong>
+                  <center>
+                     <h1><font color = "green">You have done <span id="completedCount">0</span> out of 6!</font></h1>
+                  </center>
+                  
+               </div>
+
+            </article>
+            <center>
+               <strong>
+                  <p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">&lt; Prev</a> &nbsp;Tutorial 3: Raspberry Pi LiDAR & SLAM &nbsp;&nbsp; | &nbsp;&nbsp;  References &nbsp; <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">Next &gt;</a></p>
+               </strong>
+            </center>
+         </main_noaside>
+      </section>
+      <footer>
+         <p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+         </p>
+      </footer>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const checkboxes = document.querySelectorAll('.task-checkbox');
+         
+             checkboxes.forEach(function(checkbox) {
+                 const label = checkbox.nextElementSibling; // 获取复选框旁边的label
+                 checkbox.addEventListener('change', function() {
+                     if (this.checked) {
+                         label.textContent = 'Marked as completed';
+                         label.classList.remove('waiting');
+                         label.classList.add('completed');
+                     } else {
+                         label.textContent = 'Waiting Complete';
+                         label.classList.remove('completed');
+                         label.classList.add('waiting');
+                     }
+                     updateCompletedCount();
+                 });
+             });
+         
+             function updateCompletedCount() {
+                 const completedCount = document.querySelectorAll('.task-checkbox:checked').length;
+                 document.getElementById('completedCount').textContent = completedCount;
+             }
+         });
+      </script>
+      <script src="https://comp.nus.edu.sg/~guoyi/src/prism.js"></script>
+   </body>
+</html>

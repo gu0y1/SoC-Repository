@@ -104,7 +104,7 @@
                         <tr>
                            <td></td>
                            <td>├</td>
-                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">4. ROS Networking</a></td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">4. ROS Networking</a></td>
                            <td></td>
                         </tr>
                         <tr>
@@ -160,412 +160,411 @@
 │           ├── talker.cpp  (publisher node source code)
 │           └── listener.cpp  (subscriber node source code)
 └── (other ROS workspace directories and files)</code></pre>
-					<details>
-						<summary>Click here to expand the whole file tree.</summary>
-<pre><code class="language-markup">~/cg2111a_exercise_ws $ tree
+               <details>
+                  <summary>Click here to expand the whole file tree.</summary>
+                  <pre><code class="language-markup">~/cg2111a_exercise_ws $ tree
 .
 ├── build
-│   ├── atomic_configure
-│   │   ├── env.sh
-│   │   ├── local_setup.bash
-│   │   ├── local_setup.sh
-│   │   ├── local_setup.zsh
-│   │   ├── setup.bash
-│   │   ├── setup.sh
-│   │   ├── _setup_util.py
-│   │   └── setup.zsh
-│   ├── catkin
-│   │   └── catkin_generated
-│   │       └── version
-│   │           └── package.cmake
-│   ├── catkin_generated
-│   │   ├── env_cached.sh
-│   │   ├── generate_cached_setup.py
-│   │   ├── installspace
-│   │   │   ├── env.sh
-│   │   │   ├── local_setup.bash
-│   │   │   ├── local_setup.sh
-│   │   │   ├── local_setup.zsh
-│   │   │   ├── setup.bash
-│   │   │   ├── setup.sh
-│   │   │   ├── _setup_util.py
-│   │   │   └── setup.zsh
-│   │   ├── order_packages.cmake
-│   │   ├── order_packages.py
-│   │   ├── setup_cached.sh
-│   │   └── stamps
-│   │       └── Project
-│   │           ├── interrogate_setup_dot_py.py.stamp
-│   │           ├── order_packages.cmake.em.stamp
-│   │           ├── package.xml.stamp
-│   │           └── _setup_util.py.stamp
-│   ├── CATKIN_IGNORE
-│   ├── catkin_make.cache
-│   ├── cg2111a_talker_listener
-│   │   ├── catkin_generated
-│   │   │   ├── cg2111a_talker_listener-msg-extras.cmake.develspace.in
-│   │   │   ├── cg2111a_talker_listener-msg-extras.cmake.installspace.in
-│   │   │   ├── installspace
-│   │   │   │   ├── cg2111a_talker_listenerConfig.cmake
-│   │   │   │   ├── cg2111a_talker_listenerConfig-version.cmake
-│   │   │   │   ├── cg2111a_talker_listener-msg-extras.cmake
-│   │   │   │   ├── cg2111a_talker_listener-msg-paths.cmake
-│   │   │   │   └── cg2111a_talker_listener.pc
-│   │   │   ├── ordered_paths.cmake
-│   │   │   ├── package.cmake
-│   │   │   ├── pkg.develspace.context.pc.py
-│   │   │   ├── pkg.installspace.context.pc.py
-│   │   │   └── stamps
-│   │   │       └── cg2111a_talker_listener
-│   │   │           ├── package.xml.stamp
-│   │   │           ├── pkg-genmsg.cmake.em.stamp
-│   │   │           └── pkg.pc.em.stamp
-│   │   ├── cmake
-│   │   │   ├── cg2111a_talker_listener-genmsg.cmake
-│   │   │   └── cg2111a_talker_listener-genmsg-context.py
-│   │   ├── CMakeFiles
-│   │   │   ├── cg2111a_talker_listener_gencpp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_generate_messages_cpp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_generate_messages.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_generate_messages_eus.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_generate_messages_lisp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_generate_messages_nodejs.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_generate_messages_py.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_geneus.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_genlisp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_gennodejs.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── cg2111a_talker_listener_genpy.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── CMakeDirectoryInformation.cmake
-│   │   │   ├── listener.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── CXX.includecache
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   ├── flags.make
-│   │   │   │   ├── link.txt
-│   │   │   │   ├── progress.make
-│   │   │   │   └── src
-│   │   │   │       └── listener.cpp.o
-│   │   │   ├── progress.marks
-│   │   │   ├── roscpp_generate_messages_cpp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── roscpp_generate_messages_eus.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── roscpp_generate_messages_lisp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── roscpp_generate_messages_nodejs.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── roscpp_generate_messages_py.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── rosgraph_msgs_generate_messages_cpp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── rosgraph_msgs_generate_messages_eus.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── rosgraph_msgs_generate_messages_lisp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── rosgraph_msgs_generate_messages_nodejs.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── rosgraph_msgs_generate_messages_py.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   └── progress.make
-│   │   │   ├── std_msgs_generate_messages_cpp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── std_msgs_generate_messages_eus.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── std_msgs_generate_messages_lisp.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── std_msgs_generate_messages_nodejs.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   ├── std_msgs_generate_messages_py.dir
-│   │   │   │   ├── build.make
-│   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   ├── DependInfo.cmake
-│   │   │   │   ├── depend.internal
-│   │   │   │   ├── depend.make
-│   │   │   │   └── progress.make
-│   │   │   └── talker.dir
-│   │   │       ├── build.make
-│   │   │       ├── cmake_clean.cmake
-│   │   │       ├── CXX.includecache
-│   │   │       ├── DependInfo.cmake
-│   │   │       ├── depend.internal
-│   │   │       ├── depend.make
-│   │   │       ├── flags.make
-│   │   │       ├── link.txt
-│   │   │       ├── progress.make
-│   │   │       └── src
-│   │   │           └── talker.cpp.o
-│   │   ├── cmake_install.cmake
-│   │   ├── CTestTestfile.cmake
-│   │   └── Makefile
-│   ├── CMakeCache.txt
-│   ├── CMakeFiles
-│   │   ├── 3.16.3
-│   │   │   ├── CMakeCCompiler.cmake
-│   │   │   ├── CMakeCXXCompiler.cmake
-│   │   │   ├── CMakeDetermineCompilerABI_C.bin
-│   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
-│   │   │   ├── CMakeSystem.cmake
-│   │   │   ├── CompilerIdC
-│   │   │   │   ├── a.out
-│   │   │   │   ├── CMakeCCompilerId.c
-│   │   │   │   └── tmp
-│   │   │   └── CompilerIdCXX
-│   │   │       ├── a.out
-│   │   │       ├── CMakeCXXCompilerId.cpp
-│   │   │       └── tmp
-│   │   ├── clean_test_results.dir
-│   │   │   ├── build.make
-│   │   │   ├── cmake_clean.cmake
-│   │   │   ├── DependInfo.cmake
-│   │   │   └── progress.make
-│   │   ├── cmake.check_cache
-│   │   ├── CMakeDirectoryInformation.cmake
-│   │   ├── CMakeError.log
-│   │   ├── CMakeOutput.log
-│   │   ├── CMakeRuleHashes.txt
-│   │   ├── CMakeTmp
-│   │   ├── download_extra_data.dir
-│   │   │   ├── build.make
-│   │   │   ├── cmake_clean.cmake
-│   │   │   ├── DependInfo.cmake
-│   │   │   └── progress.make
-│   │   ├── doxygen.dir
-│   │   │   ├── build.make
-│   │   │   ├── cmake_clean.cmake
-│   │   │   ├── DependInfo.cmake
-│   │   │   └── progress.make
-│   │   ├── Makefile2
-│   │   ├── Makefile.cmake
-│   │   ├── progress.marks
-│   │   ├── run_tests.dir
-│   │   │   ├── build.make
-│   │   │   ├── cmake_clean.cmake
-│   │   │   ├── DependInfo.cmake
-│   │   │   └── progress.make
-│   │   ├── TargetDirectories.txt
-│   │   └── tests.dir
-│   │       ├── build.make
-│   │       ├── cmake_clean.cmake
-│   │       ├── DependInfo.cmake
-│   │       └── progress.make
-│   ├── cmake_install.cmake
-│   ├── CTestConfiguration.ini
-│   ├── CTestCustom.cmake
-│   ├── CTestTestfile.cmake
-│   ├── gtest
-│   │   ├── CMakeFiles
-│   │   │   ├── CMakeDirectoryInformation.cmake
-│   │   │   └── progress.marks
-│   │   ├── cmake_install.cmake
-│   │   ├── CTestTestfile.cmake
-│   │   ├── googlemock
-│   │   │   ├── CMakeFiles
-│   │   │   │   ├── CMakeDirectoryInformation.cmake
-│   │   │   │   ├── gmock.dir
-│   │   │   │   │   ├── build.make
-│   │   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   │   ├── DependInfo.cmake
-│   │   │   │   │   ├── depend.make
-│   │   │   │   │   ├── flags.make
-│   │   │   │   │   ├── link.txt
-│   │   │   │   │   ├── progress.make
-│   │   │   │   │   └── src
-│   │   │   │   ├── gmock_main.dir
-│   │   │   │   │   ├── build.make
-│   │   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   │   ├── DependInfo.cmake
-│   │   │   │   │   ├── depend.make
-│   │   │   │   │   ├── flags.make
-│   │   │   │   │   ├── link.txt
-│   │   │   │   │   ├── progress.make
-│   │   │   │   │   └── src
-│   │   │   │   └── progress.marks
-│   │   │   ├── cmake_install.cmake
-│   │   │   ├── CTestTestfile.cmake
-│   │   │   ├── gtest
-│   │   │   │   ├── CMakeFiles
-│   │   │   │   │   ├── CMakeDirectoryInformation.cmake
-│   │   │   │   │   ├── gtest.dir
-│   │   │   │   │   │   ├── build.make
-│   │   │   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   │   │   ├── DependInfo.cmake
-│   │   │   │   │   │   ├── depend.make
-│   │   │   │   │   │   ├── flags.make
-│   │   │   │   │   │   ├── link.txt
-│   │   │   │   │   │   ├── progress.make
-│   │   │   │   │   │   └── src
-│   │   │   │   │   ├── gtest_main.dir
-│   │   │   │   │   │   ├── build.make
-│   │   │   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   │   │   ├── DependInfo.cmake
-│   │   │   │   │   │   ├── depend.make
-│   │   │   │   │   │   ├── flags.make
-│   │   │   │   │   │   ├── link.txt
-│   │   │   │   │   │   ├── progress.make
-│   │   │   │   │   │   └── src
-│   │   │   │   │   └── progress.marks
-│   │   │   │   ├── cmake_install.cmake
-│   │   │   │   ├── CTestTestfile.cmake
-│   │   │   │   └── Makefile
-│   │   │   └── Makefile
-│   │   ├── lib
-│   │   └── Makefile
-│   ├── Makefile
-│   └── test_results
+│   ├── atomic_configure
+│   │   ├── env.sh
+│   │   ├── local_setup.bash
+│   │   ├── local_setup.sh
+│   │   ├── local_setup.zsh
+│   │   ├── setup.bash
+│   │   ├── setup.sh
+│   │   ├── _setup_util.py
+│   │   └── setup.zsh
+│   ├── catkin
+│   │   └── catkin_generated
+│   │       └── version
+│   │           └── package.cmake
+│   ├── catkin_generated
+│   │   ├── env_cached.sh
+│   │   ├── generate_cached_setup.py
+│   │   ├── installspace
+│   │   │   ├── env.sh
+│   │   │   ├── local_setup.bash
+│   │   │   ├── local_setup.sh
+│   │   │   ├── local_setup.zsh
+│   │   │   ├── setup.bash
+│   │   │   ├── setup.sh
+│   │   │   ├── _setup_util.py
+│   │   │   └── setup.zsh
+│   │   ├── order_packages.cmake
+│   │   ├── order_packages.py
+│   │   ├── setup_cached.sh
+│   │   └── stamps
+│   │       └── Project
+│   │           ├── interrogate_setup_dot_py.py.stamp
+│   │           ├── order_packages.cmake.em.stamp
+│   │           ├── package.xml.stamp
+│   │           └── _setup_util.py.stamp
+│   ├── CATKIN_IGNORE
+│   ├── catkin_make.cache
+│   ├── cg2111a_talker_listener
+│   │   ├── catkin_generated
+│   │   │   ├── cg2111a_talker_listener-msg-extras.cmake.develspace.in
+│   │   │   ├── cg2111a_talker_listener-msg-extras.cmake.installspace.in
+│   │   │   ├── installspace
+│   │   │   │   ├── cg2111a_talker_listenerConfig.cmake
+│   │   │   │   ├── cg2111a_talker_listenerConfig-version.cmake
+│   │   │   │   ├── cg2111a_talker_listener-msg-extras.cmake
+│   │   │   │   ├── cg2111a_talker_listener-msg-paths.cmake
+│   │   │   │   └── cg2111a_talker_listener.pc
+│   │   │   ├── ordered_paths.cmake
+│   │   │   ├── package.cmake
+│   │   │   ├── pkg.develspace.context.pc.py
+│   │   │   ├── pkg.installspace.context.pc.py
+│   │   │   └── stamps
+│   │   │       └── cg2111a_talker_listener
+│   │   │           ├── package.xml.stamp
+│   │   │           ├── pkg-genmsg.cmake.em.stamp
+│   │   │           └── pkg.pc.em.stamp
+│   │   ├── cmake
+│   │   │   ├── cg2111a_talker_listener-genmsg.cmake
+│   │   │   └── cg2111a_talker_listener-genmsg-context.py
+│   │   ├── CMakeFiles
+│   │   │   ├── cg2111a_talker_listener_gencpp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_generate_messages_cpp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_generate_messages.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_generate_messages_eus.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_generate_messages_lisp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_generate_messages_nodejs.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_generate_messages_py.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_geneus.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_genlisp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_gennodejs.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── cg2111a_talker_listener_genpy.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── CMakeDirectoryInformation.cmake
+│   │   │   ├── listener.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── CXX.includecache
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   ├── flags.make
+│   │   │   │   ├── link.txt
+│   │   │   │   ├── progress.make
+│   │   │   │   └── src
+│   │   │   │       └── listener.cpp.o
+│   │   │   ├── progress.marks
+│   │   │   ├── roscpp_generate_messages_cpp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── roscpp_generate_messages_eus.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── roscpp_generate_messages_lisp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── roscpp_generate_messages_nodejs.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── roscpp_generate_messages_py.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── rosgraph_msgs_generate_messages_cpp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── rosgraph_msgs_generate_messages_eus.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── rosgraph_msgs_generate_messages_lisp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── rosgraph_msgs_generate_messages_nodejs.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── rosgraph_msgs_generate_messages_py.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   └── progress.make
+│   │   │   ├── std_msgs_generate_messages_cpp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── std_msgs_generate_messages_eus.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── std_msgs_generate_messages_lisp.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── std_msgs_generate_messages_nodejs.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   ├── std_msgs_generate_messages_py.dir
+│   │   │   │   ├── build.make
+│   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   ├── DependInfo.cmake
+│   │   │   │   ├── depend.internal
+│   │   │   │   ├── depend.make
+│   │   │   │   └── progress.make
+│   │   │   └── talker.dir
+│   │   │       ├── build.make
+│   │   │       ├── cmake_clean.cmake
+│   │   │       ├── CXX.includecache
+│   │   │       ├── DependInfo.cmake
+│   │   │       ├── depend.internal
+│   │   │       ├── depend.make
+│   │   │       ├── flags.make
+│   │   │       ├── link.txt
+│   │   │       ├── progress.make
+│   │   │       └── src
+│   │   │           └── talker.cpp.o
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   └── Makefile
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   │   ├── 3.16.3
+│   │   │   ├── CMakeCCompiler.cmake
+│   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   ├── CMakeSystem.cmake
+│   │   │   ├── CompilerIdC
+│   │   │   │   ├── a.out
+│   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   └── tmp
+│   │   │   └── CompilerIdCXX
+│   │   │       ├── a.out
+│   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │       └── tmp
+│   │   ├── clean_test_results.dir
+│   │   │   ├── build.make
+│   │   │   ├── cmake_clean.cmake
+│   │   │   ├── DependInfo.cmake
+│   │   │   └── progress.make
+│   │   ├── cmake.check_cache
+│   │   ├── CMakeDirectoryInformation.cmake
+│   │   ├── CMakeError.log
+│   │   ├── CMakeOutput.log
+│   │   ├── CMakeRuleHashes.txt
+│   │   ├── CMakeTmp
+│   │   ├── download_extra_data.dir
+│   │   │   ├── build.make
+│   │   │   ├── cmake_clean.cmake
+│   │   │   ├── DependInfo.cmake
+│   │   │   └── progress.make
+│   │   ├── doxygen.dir
+│   │   │   ├── build.make
+│   │   │   ├── cmake_clean.cmake
+│   │   │   ├── DependInfo.cmake
+│   │   │   └── progress.make
+│   │   ├── Makefile2
+│   │   ├── Makefile.cmake
+│   │   ├── progress.marks
+│   │   ├── run_tests.dir
+│   │   │   ├── build.make
+│   │   │   ├── cmake_clean.cmake
+│   │   │   ├── DependInfo.cmake
+│   │   │   └── progress.make
+│   │   ├── TargetDirectories.txt
+│   │   └── tests.dir
+│   │       ├── build.make
+│   │       ├── cmake_clean.cmake
+│   │       ├── DependInfo.cmake
+│   │       └── progress.make
+│   ├── cmake_install.cmake
+│   ├── CTestConfiguration.ini
+│   ├── CTestCustom.cmake
+│   ├── CTestTestfile.cmake
+│   ├── gtest
+│   │   ├── CMakeFiles
+│   │   │   ├── CMakeDirectoryInformation.cmake
+│   │   │   └── progress.marks
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   ├── googlemock
+│   │   │   ├── CMakeFiles
+│   │   │   │   ├── CMakeDirectoryInformation.cmake
+│   │   │   │   ├── gmock.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   ├── depend.make
+│   │   │   │   │   ├── flags.make
+│   │   │   │   │   ├── link.txt
+│   │   │   │   │   ├── progress.make
+│   │   │   │   │   └── src
+│   │   │   │   ├── gmock_main.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   ├── depend.make
+│   │   │   │   │   ├── flags.make
+│   │   │   │   │   ├── link.txt
+│   │   │   │   │   ├── progress.make
+│   │   │   │   │   └── src
+│   │   │   │   └── progress.marks
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   ├── gtest
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   ├── CMakeDirectoryInformation.cmake
+│   │   │   │   │   ├── gtest.dir
+│   │   │   │   │   │   ├── build.make
+│   │   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   │   ├── depend.make
+│   │   │   │   │   │   ├── flags.make
+│   │   │   │   │   │   ├── link.txt
+│   │   │   │   │   │   ├── progress.make
+│   │   │   │   │   │   └── src
+│   │   │   │   │   ├── gtest_main.dir
+│   │   │   │   │   │   ├── build.make
+│   │   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   │   ├── depend.make
+│   │   │   │   │   │   ├── flags.make
+│   │   │   │   │   │   ├── link.txt
+│   │   │   │   │   │   ├── progress.make
+│   │   │   │   │   │   └── src
+│   │   │   │   │   └── progress.marks
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   ├── CTestTestfile.cmake
+│   │   │   │   └── Makefile
+│   │   │   └── Makefile
+│   │   ├── lib
+│   │   └── Makefile
+│   ├── Makefile
+│   └── test_results
 ├── devel
-│   ├── cmake.lock
-│   ├── env.sh
-│   ├── lib
-│   │   ├── cg2111a_talker_listener
-│   │   │   ├── listener
-│   │   │   └── talker
-│   │   ├── pkgconfig
-│   │   │   └── cg2111a_talker_listener.pc
-│   │   └── python3
-│   │       └── dist-packages
-│   │           └── cg2111a_talker_listener
-│   │               └── __init__.py
-│   ├── local_setup.bash
-│   ├── local_setup.sh
-│   ├── local_setup.zsh
-│   ├── setup.bash
-│   ├── setup.sh
-│   ├── _setup_util.py
-│   ├── setup.zsh
-│   └── share
-│       ├── cg2111a_talker_listener
-│       │   └── cmake
-│       │       ├── cg2111a_talker_listenerConfig.cmake
-│       │       ├── cg2111a_talker_listenerConfig-version.cmake
-│       │       ├── cg2111a_talker_listener-msg-extras.cmake
-│       │       └── cg2111a_talker_listener-msg-paths.cmake
-│       └── roseus
-│           └── ros
-│               └── cg2111a_talker_listener
-│                   └── manifest.l
+│   ├── cmake.lock
+│   ├── env.sh
+│   ├── lib
+│   │   ├── cg2111a_talker_listener
+│   │   │   ├── listener
+│   │   │   └── talker
+│   │   ├── pkgconfig
+│   │   │   └── cg2111a_talker_listener.pc
+│   │   └── python3
+│   │       └── dist-packages
+│   │           └── cg2111a_talker_listener
+│   │               └── __init__.py
+│   ├── local_setup.bash
+│   ├── local_setup.sh
+│   ├── local_setup.zsh
+│   ├── setup.bash
+│   ├── setup.sh
+│   ├── _setup_util.py
+│   ├── setup.zsh
+│   └── share
+│       ├── cg2111a_talker_listener
+│       │   └── cmake
+│       │       ├── cg2111a_talker_listenerConfig.cmake
+│       │       ├── cg2111a_talker_listenerConfig-version.cmake
+│       │       ├── cg2111a_talker_listener-msg-extras.cmake
+│       │       └── cg2111a_talker_listener-msg-paths.cmake
+│       └── roseus
+│           └── ros
+│               └── cg2111a_talker_listener
+│                   └── manifest.l
 └── src
     ├── cg2111a_talker_listener
-    │   ├── CMakeLists.txt
-    │   ├── include
-    │   │   └── cg2111a_talker_listener
-    │   ├── package.xml
-    │   └── src
-    │       ├── listener.cpp
-    │       └── talker.cpp
+    │   ├── CMakeLists.txt
+    │   ├── include
+    │   │   └── cg2111a_talker_listener
+    │   ├── package.xml
+    │   └── src
+    │       ├── listener.cpp
+    │       └── talker.cpp
     └── CMakeLists.txt -> /opt/ros/noetic/share/catkin/cmake/toplevel.cmake
 
 92 directories, 305 files
 </code></pre>
-						
-					</details>	
+               </details>
                <p>This structure outlines the key components of the ROS workspace:</p>
                <ul>
                   <li><strong>build/</strong>: Contains intermediate files generated during the build process.</li>
@@ -581,13 +580,13 @@
                   </li>
                </ul>
                <p>This hierarchical view helps in understanding the organization and the relationships between different components of the ROS workspace.</p>
-			   <div class="check">
+               <div class="check">
                   <strong style="color:white; background-color:gray;">Before we start!&nbsp;</strong>
                   <p>Please check if you successfully implemented the ROS Noetic on your Raspberry Pi or on your Ubuntu 20.04 PC. If not, please navigate to <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">Tutorial 1:  Setup ROS on RPi 4</a> to set up the ROS Noetic environment.</p>
-                     <input type="checkbox" class="task-checkbox" id="task0"><label for="task0" class="status waiting">Waiting Complete</label>
+                  <input type="checkbox" class="task-checkbox" id="task0"><label for="task0" class="status waiting">Waiting Complete</label>
                   </p>
-				  </div>
-			      <br>
+               </div>
+               <br>
                <h2><strong>1. Steps for ROS Workspace and Package Creation</strong></h2>
                <ol>
                   <li>
@@ -601,17 +600,15 @@ cd ~/cg2111a_exercise_ws
 catkin_make</code></pre>
                      <p>This step sets up a ROS workspace, which is a directory where you can develop ROS projects. The <code class="language-sh">catkin_make</code> command is used to build the workspace, compiling any source files and preparing the environment for ROS nodes.</p>
                   </li>
-				  <div class="check">
-                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check, your terminal looks like this:</p>
-				  
-				  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/1.png" width=60%></center>
-
-				  <p>and you received: <code class="language-sh">Build files have been written to: /home/pi/cg2111a_exercise_ws/build</code> at last.<br>
-                     <input type="checkbox" class="task-checkbox" id="task1"><label for="task1" class="status waiting">Waiting Complete</label>
-                  </p>
-				  </div>
-			      <br>
+                  <div class="check">
+                     <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                     <p>Please check, your terminal looks like this:</p>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/1.png" width=60%></center>
+                     <p>and you received: <code class="language-sh">Build files have been written to: /home/pi/cg2111a_exercise_ws/build</code> at last.<br>
+                        <input type="checkbox" class="task-checkbox" id="task1"><label for="task1" class="status waiting">Waiting Complete</label>
+                     </p>
+                  </div>
+                  <br>
                   <li>
                      <strong>Create a package.</strong>
                      <p>Inside <code class="language-sh">~/cg2111a_exercise_ws/src</code>, create a package called <code class="language-sh">cg2111a_talker_listener</code> using the command:</p>
@@ -619,17 +616,15 @@ catkin_make</code></pre>
 catkin_create_pkg cg2111a_talker_listener std_msgs roscpp</code></pre>
                      <p>This command creates a new ROS package with the specified name and dependencies. The package will include two important files, <code class="language-sh">CMakeLists.txt</code> and <code class="language-sh">package.xml</code>, which are used for building the package and specifying its metadata, respectively.</p>
                   </li>
-				  <div class="check">
-                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check, your terminal looks like this:</p>
-				  
-				  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/2.png" width=60%></center>
-
-				  <p>and you received: <code class="language-sh">Successfully created files in /home/pi/cg2111a_exercise_ws/src/cg2111a_talker_listener. Please adjust the values in package.xml.</code> at last.<br>
-                     <input type="checkbox" class="task-checkbox" id="task2"><label for="task2" class="status waiting">Waiting Complete</label>
-                  </p>
-				  </div>
-			      <br>
+                  <div class="check">
+                     <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                     <p>Please check, your terminal looks like this:</p>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/2.png" width=60%></center>
+                     <p>and you received: <code class="language-sh">Successfully created files in /home/pi/cg2111a_exercise_ws/src/cg2111a_talker_listener. Please adjust the values in package.xml.</code> at last.<br>
+                        <input type="checkbox" class="task-checkbox" id="task2"><label for="task2" class="status waiting">Waiting Complete</label>
+                     </p>
+                  </div>
+                  <br>
                   <li>
                      <strong>Build the workspace and source the setup file.</strong>
                      <p>Like in Step 1, build the workspace as follows:</p>
@@ -639,36 +634,32 @@ catkin_make</code></pre>
                      <pre><code class="language-sh">source ./devel/setup.bash</code></pre>
                      <p>Building the workspace compiles all packages within it, including the newly created package. Sourcing the setup file updates your environment to include paths to the workspace's binaries and scripts, making ROS nodes and tools from this workspace available for use.</p>
                   </li>
-				  <div class="check">
-                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check, your terminal looks like this:</p>
-				  
-				  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/3.png" width=60%></center>
-
-				  <p>and you received: <code class="language-sh">Build files have been written to: /home/pi/cg2111a_exercise_ws/build</code> at last.<br>
-                     <input type="checkbox" class="task-checkbox" id="task3"><label for="task3" class="status waiting">Waiting Complete</label>
-                  </p>
-				  </div>
-			      <br>
+                  <div class="check">
+                     <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                     <p>Please check, your terminal looks like this:</p>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/3.png" width=60%></center>
+                     <p>and you received: <code class="language-sh">Build files have been written to: /home/pi/cg2111a_exercise_ws/build</code> at last.<br>
+                        <input type="checkbox" class="task-checkbox" id="task3"><label for="task3" class="status waiting">Waiting Complete</label>
+                     </p>
+                  </div>
+                  <br>
                   <li>
                      <strong>Check the first-order dependencies.</strong>
-					 <p>Before we check the dependencies, we need to install a Python library <code class="language-sh">rosdep</code>:</p>
-					 
-					 <pre><code class="language-sh">sudo pip3 install -U rosdep</code></pre>
-					 
+                     <p>Before we check the dependencies, we need to install a Python library <code class="language-sh">rosdep</code>:</p>
+                     <pre><code class="language-sh">sudo pip3 install -U rosdep</code></pre>
                      <p>Check the first-order dependencies of the package using the command:</p>
                      <pre><code class="language-sh">rospack depends1 cg2111a_talker_listener</code></pre>
                      <p>This command lists the direct dependencies of the specified package, reflecting the dependencies declared when the package was created. Understanding these dependencies is crucial for ensuring your package has access to the necessary ROS libraries and messages for its operation.</p>
                   </li>
-				  <div class="check">
-                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check, your terminal's results are:</p>
-				  <pre><code class="language-sh">roscpp
+                  <div class="check">
+                     <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                     <p>Please check, your terminal's results are:</p>
+                     <pre><code class="language-sh">roscpp
 std_msgs</code></pre>
                      <input type="checkbox" class="task-checkbox" id="task4"><label for="task4" class="status waiting">Waiting Complete</label>
-                  </p>
-				  </div>
-			      <br>
+                     </p>
+                  </div>
+                  <br>
                </ol>
                <p>The result of checking the dependencies should align with the specified dependencies when creating the package. This ensures that your package can interact with ROS correctly and utilize necessary message types and functionalities.</p>
                <ol start="5">
@@ -713,8 +704,7 @@ int main(int argc, char **argv)
                      <pre><code class="language-sh">touch listener.cpp
 nano listener.cpp</code></pre>
                      <p>For the <code class="language-sh">listener.cpp</code>, you'll need to write a corresponding subscriber code that listens to the messages published by <code class="language-sh">talker.cpp</code>. The detailed code for this will involve setting up a subscriber to the "chatter" topic and defining a callback function to process incoming messages.</p>
-					 
-					 <p>Write the following code into <code class="language-sh">listener.cpp</code>:</p>
+                     <p>Write the following code into <code class="language-sh">listener.cpp</code>:</p>
                      <pre><code class="language-cpp">#include "ros/ros.h"
 #include "std_msgs/String.h"
 /**
@@ -734,19 +724,15 @@ int main(int argc, char **argv)
   return 0;
 }</code></pre>
                      <p>Save the file. This code sets up a ROS node that subscribes to the "chatter" topic and prints the messages it receives, illustrating how to receive and process messages within the ROS system.</p>
-                     
                   </li>
                </ol>
                <ol start="7">
                   <li>
                      <strong>Modify <code class="language-sh">CMakeLists.txt</code>.</strong>
-                     
                      <p>Next, open the <code class="language-sh">CMakeLists.txt</code> inside <code class="language-sh">~/cg2111a_exercise_ws/src/cg2111a_talker_listener</code>:
-					 
-					 <pre><code class="language-sh">cd ~/cg2111a_exercise_ws/src/cg2111a_talker_listener
+                     <pre><code class="language-sh">cd ~/cg2111a_exercise_ws/src/cg2111a_talker_listener
 nano CMakeLists.txt</code></pre>
-
-					 and modify it as detailed below to include the new nodes and their dependencies:</p>
+                     and modify it as detailed below to include the new nodes and their dependencies:</p>
                      <pre><code class="language-markup">cmake_minimum_required(VERSION 3.0.2)
 project(cg2111a_talker_listener)
 find_package(catkin REQUIRED COMPONENTS
@@ -779,10 +765,9 @@ add_dependencies(listener cg2111a_talker_listener_generate_messages_cpp)</code><
                   <li>
                      <strong>Modify <code class="language-sh">package.xml</code>.</strong>
                      <p>Open the <code class="language-sh">package.xml</code> file inside <code class="language-sh">~/cg2111a_exercise_ws/src/cg2111a_talker_listener</code>:
-					<pre><code class="language-sh">cd ~/cg2111a_exercise_ws/src/cg2111a_talker_listener
+                     <pre><code class="language-sh">cd ~/cg2111a_exercise_ws/src/cg2111a_talker_listener
 nano package.xml</code></pre>
-
-					 and include the following dependencies:</p>
+                     and include the following dependencies:</p>
                      <pre><code class="language-xml">&lt;?xml version="1.0"?&gt;
 &lt;package format="2"&gt;
   &lt;name&gt;cg2111a_talker_listener&lt;/name&gt;
@@ -809,31 +794,26 @@ nano package.xml</code></pre>
 catkin_make</code></pre>
                      <p>This process compiles all the packages within the workspace, including any changes made, and updates the environment to recognize the newly built executables.</p>
                   </li>
-				  <div class="check">
-                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check, your terminal looks like this:</p>
-				  
-				  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/9.png" width=60%></center>
-
-				  <p>and you received: <code class="language-sh">[100%] Built target listener</code> at last.<br>
-                     <input type="checkbox" class="task-checkbox" id="task5"><label for="task5" class="status waiting">Waiting Complete</label>
-                  </p>
-				  </div>
-			      <br>
+                  <div class="check">
+                     <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                     <p>Please check, your terminal looks like this:</p>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/9.png" width=60%></center>
+                     <p>and you received: <code class="language-sh">[100%] Built target listener</code> at last.<br>
+                        <input type="checkbox" class="task-checkbox" id="task5"><label for="task5" class="status waiting">Waiting Complete</label>
+                     </p>
+                  </div>
+                  <br>
                   <li>
                      <strong>Running the Publisher (Talker) and Subscriber (Listener).</strong>
                      <p>To simulate the talker and listener communicating, follow these steps:</p>
                      <ol>
-					 
                         <li>Open one terminal and navigate to your workspace: <code class="language-sh">cd ~/cg2111a_exercise_ws</code>.</li>
-						<li>Run <code class="language-sh">source ./devel/setup.bash</code> and <code class="language-sh">roscore</code>. This starts the ROS master node.</li>
+                        <li>Run <code class="language-sh">source ./devel/setup.bash</code> and <code class="language-sh">roscore</code>. This starts the ROS master node.</li>
                         <li>In a new terminal, navigate to workspace: <code class="language-sh">cd ~/cg2111a_exercise_ws</code> and source the setup file with <code class="language-sh">source ./devel/setup.bash</code>. Run the talker node with <code class="language-sh">rosrun cg2111a_talker_listener talker</code>.</li>
-						<li>In a new terminal, navigate to workspace: <code class="language-sh">cd ~/cg2111a_exercise_ws</code> and source the setup file with <code class="language-sh">source ./devel/setup.bash</code>. Run the talker node with <code class="language-sh">rosrun cg2111a_talker_listener listener</code>.</li>
+                        <li>In a new terminal, navigate to workspace: <code class="language-sh">cd ~/cg2111a_exercise_ws</code> and source the setup file with <code class="language-sh">source ./devel/setup.bash</code>. Run the talker node with <code class="language-sh">rosrun cg2111a_talker_listener listener</code>.</li>
                      </ol>
                      <p>You should see the terminal running the talker node publishing a series of messages, and the terminal running the listener node echoing those messages:</p>
-					 
-					 <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/topics_demo.gif" width=60%></center>
-					 
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics/img/topics_demo.gif" width=60%></center>
                      <p>Experiment by stopping the listener node (using Ctrl+C) while keeping the talker node running, and observe the behavior. Similarly, stop the talker node while keeping the listener running, and note any differences.</p>
                   </li>
                </ol>
@@ -876,25 +856,26 @@ source ./devel/setup.bash</code></pre>
                      <h1><font color = "green">You have done <span id="completedCount">0</span> out of 6!</font></h1>
                   </center>
                   <p>Hip hip hooray! You have successfully learned how to:</p>
-				  <ol>
-                  <li>Create a workspace and a package.</li>
-                  <li>Develop nodes and define messages.</li>
-                  <li>Utilize nodes and messages to facilitate one-way communication.</li>
-                  <li>Design and implement a launch file.</li>
-               </ol>
-			   <p>You are now have a better understanding of what we do in ROS. Wish you all the best for the final run of the CG2111A!</p>
-			   
-			   <center><strong><p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">&lt; Prev</a> &nbsp;Tutorial 1: Setup ROS on Raspberry Pi 4 · Tutorial 3: Raspberry Pi LiDAR & SLAM &nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">Next &gt;</a></p></strong></center>
-				  <br>
-				  
+                  <ol>
+                     <li>Create a workspace and a package.</li>
+                     <li>Develop nodes and define messages.</li>
+                     <li>Utilize nodes and messages to facilitate one-way communication.</li>
+                     <li>Design and implement a launch file.</li>
+                  </ol>
+                  <p>You are now have a better understanding of what we do in ROS. Wish you all the best for the final run of the CG2111A!</p>
+                  <br>
                </div>
                <hr>
-               <br>
                <h2> References:</h2>
                <ul>
-                  <li> Dr. Andi Sudjana Putra; EE3305/ME3243, AY22/23 Semester I;
+                  <li> Dr. Andi Sudjana Putra, Prof. Prahlad Vadakkepat; EE3305/ME3243, AY22/23 Semester I;
                </ul>
             </article>
+            <center>
+               <strong>
+                  <p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">&lt; Prev</a> &nbsp;Tutorial 1: Setup ROS on Raspberry Pi 4 &nbsp;&nbsp; | &nbsp;&nbsp; Tutorial 3: Raspberry Pi LiDAR & SLAM &nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">Next &gt;</a></p>
+               </strong>
+            </center>
          </main_noaside>
       </section>
       <footer>

@@ -104,7 +104,7 @@
                         <tr>
                            <td></td>
                            <td>├</td>
-                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">4. ROS Networking</a></td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">4. ROS Networking</a></td>
                            <td></td>
                         </tr>
                         <tr>
@@ -245,10 +245,10 @@ sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
                <p><code class="language-sh">rosdep</code> is a command-line tool for installing system dependencies for ROS packages. To initialize it, run:</p>
                <pre><code class="language-sh">sudo rosdep init && rosdep update</code></pre>
                <p>This command initializes <code class="language-sh">rosdep</code> and then updates its database to ensure it has the latest information about available packages and dependencies.</p>
-			   <div class="debug">
+               <div class="debug">
                   <strong style="color:white; background-color:purple;">Debugging Time&nbsp;</strong>
                   <p>Note: If you encounter error messages like: </p>
-				  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/5.1.png" width=60%></center>
+                  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/5.1.png" width=60%></center>
                   <p>Just ignore and continue doing next step!</p>
                </div>
                <br>
@@ -311,42 +311,40 @@ sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
                   Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task6"><label for="task6" class="status waiting">Waiting Complete</label></p>
                </div>
                <br><br>
-			   <h2><strong>7. Initialize and Test ROS Noetic</strong></h2>
-
-<p>We will use the pre-installed turtlesim to test the functionalities of ROS. Before we run the ROS, we need install some python packages manually. Please enter a terminal, and use these commands to install packages:</p>
-<pre><code class="language-sh">sudo apt update
+               <h2><strong>7. Initialize and Test ROS Noetic</strong></h2>
+               <p>We will use the pre-installed turtlesim to test the functionalities of ROS. Before we run the ROS, we need install some python packages manually. Please enter a terminal, and use these commands to install packages:</p>
+               <pre><code class="language-sh">sudo apt update
 sudo pip3 install defusedxml
 sudo pip3 install rospkg
 sudo pip3 install netifaces
 </code></pre>
-
-
-Then, please follow these steps to test your ROS:</p>
-
-<ol>
-    <li>Open a terminal and enter <code class="language-sh">source /opt/ros/noetic/setup.bash</code>. [Note: You need to do this for all new terminals to add the packages to the ROS searching directory list. The configuration only works for the current terminal.]</li>
-    <li>Enter <code class="language-sh">roscore</code> to start the ROS master program, you will see:<br><br>
-	
-	<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/roscore.png" width=80%></center>
-	<br>
-	</li>
-    <li>Open another terminal, perform the command from step 1 again, then enter <code class="language-sh">rosrun turtlesim turtlesim_node</code>. You should see a window titled "TurtleSim" on your screen:<br><br>
-	
-	<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/turtle.png" width=80%></center><br>
-
-	This window simulates a turtle. Note: The turtle drawing is random, so your turtle may appear differently. Do NOT close the turtlesim window.</li>
-    <li>To find out how many ROS nodes are involved, open a new terminal and enter <code class="language-sh">rosnode list</code>. You should see the following output: <br>
-    <pre><code class="language-sh">/rosout
+               Then, please follow these steps to test your ROS:</p>
+               <ol>
+                  <li>Open a terminal and enter <code class="language-sh">source /opt/ros/noetic/setup.bash</code>. [Note: You need to do this for all new terminals to add the packages to the ROS searching directory list. The configuration only works for the current terminal.]</li>
+                  <li>
+                     Enter <code class="language-sh">roscore</code> to start the ROS master program, you will see:<br><br>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/roscore.png" width=80%></center>
+                     <br>
+                  </li>
+                  <li>
+                     Open another terminal, perform the command from step 1 again, then enter <code class="language-sh">rosrun turtlesim turtlesim_node</code>. You should see a window titled "TurtleSim" on your screen:<br><br>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/turtle.png" width=80%></center>
+                     <br>
+                     This window simulates a turtle. Note: The turtle drawing is random, so your turtle may appear differently. Do NOT close the turtlesim window.
+                  </li>
+                  <li>
+                     To find out how many ROS nodes are involved, open a new terminal and enter <code class="language-sh">rosnode list</code>. You should see the following output: <br>
+                     <pre><code class="language-sh">/rosout
 /turtlesim</code></pre>
-    The <code class="language-sh">turtlesim</code> node is what you see visualized, while <code class="language-sh">rosout</code> is the default console log output.</li>
-    <li>In a new terminal, perform the command from step 1, then enter <code class="language-sh">rosrun turtlesim turtle_teleop_key</code>. This command starts another ROS node <code class="language-sh">turtle_teleop_key</code> which allows you to control the turtle simulation using your keyboard. Use the arrow keys to move your turtle around, here is a GIF demostration:<br><br>
-	
-	<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/demo.gif" width=80%></center><br></li>
-</ol>
-
-<p>This hands-on experience with turtlesim helps solidify your understanding of ROS Noetic's basic functionalities and node interaction.</p>
-
-			   
+                     The <code class="language-sh">turtlesim</code> node is what you see visualized, while <code class="language-sh">rosout</code> is the default console log output.
+                  </li>
+                  <li>
+                     In a new terminal, perform the command from step 1, then enter <code class="language-sh">rosrun turtlesim turtle_teleop_key</code>. This command starts another ROS node <code class="language-sh">turtle_teleop_key</code> which allows you to control the turtle simulation using your keyboard. Use the arrow keys to move your turtle around, here is a GIF demostration:<br><br>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/demo.gif" width=80%></center>
+                     <br>
+                  </li>
+               </ol>
+               <p>This hands-on experience with turtlesim helps solidify your understanding of ROS Noetic's basic functionalities and node interaction.</p>
                <center>
                   <h1>· End of Tutorial · </h1>
                </center>
@@ -357,17 +355,20 @@ Then, please follow these steps to test your ROS:</p>
                      <h1><font color = "green">You have done <span id="completedCount">0</span> out of 6!</font></h1>
                   </center>
                   <p>Hip, hip, hooray! You have successfully set up the ROS on your Raspberry Pi by yourself! We highly recommend trying out <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Tutorial 2: Listener & Talker</a> Exercise to familiarize yourself with the ROS. Detailed instructions will be provided in the next tutorial.</p>
-				  
-				  <center><strong><p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros">&lt; Prev</a> &nbsp;Tutorial Homepage · Tutorial 2: Listener & Talker &nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Next &gt;</a></p></strong></center>
-				  <br>
+                  <br>
                </div>
-			   <hr>
+               <hr>
                <br>
-			   <h2> References:</h2>
-			   <ul>
-				<li> Prof. Boyd Anderson; CG2111A, AY22/23 Semester II;
-			   </ul>
+               <h2> References:</h2>
+               <ul>
+                  <li> Prof. Boyd Anderson; CG2111A, AY22/23 Semester II;
+               </ul>
             </article>
+            <center>
+               <strong>
+                  <p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros">&lt; Prev</a> &nbsp;Tutorial Homepage &nbsp;&nbsp; | &nbsp;&nbsp; Tutorial 2: Listener & Talker &nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Next &gt;</a></p>
+               </strong>
+            </center>
          </main_noaside>
       </section>
       <footer>
