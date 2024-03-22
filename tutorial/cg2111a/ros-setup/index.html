@@ -142,7 +142,7 @@
                <h2><strong>2. Setup Raspberry Pi OS</strong></h2>
                <div class="warning">
                   <strong style="color:white; background-color:red;">Before You Do&nbsp;</strong>
-                  <p>Important: back up everything on your Raspberry Pi 4 before proceeding, this operation will erase your sd card and all of your work!</p>
+                  <p>Important: back up everything on your Raspberry Pi 4 before proceeding, this operation will erase your SD card and all of your work!</p>
                </div>
                <p>Similar to the process in the previous session, utilize the Raspberry Pi Imager to flash the custom image you've previously downloaded onto your Raspberry Pi's SD card. Be prepared for this step to take some time. Start the image writing process, and while it progresses, continue reading ahead!</p>
                <p>Ensuring a successful VNC connection to your Raspberry Pi is pivotal for the forthcoming steps in our tutorial. To verify that your operating system setup has been completed accurately, here's a concise checklist to guide your self-review:</p>
@@ -160,7 +160,7 @@
                <br>
                <div class="debug">
                   <strong style="color:white; background-color:purple;">Debugging Time&nbsp;</strong>
-                  <p>Note: If you encounter the “<strong>Cannot currently show the desktop</strong>” error while using VNC, you can resolve this issue by editing the boot/config.txt file on your Raspberry Pi.</p>
+                  <p>Note: If you encounter the “<strong>Cannot currently show the desktop</strong>” error while using VNC, you can resolve this issue by editing the <code class="language-sh">boot/config.txt</code> file on your Raspberry Pi.</p>
                   <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/img/hdmi.png" width="300"></center>
                   <p>To do this, open a terminal on your Raspberry Pi and run the following commands:</p>
                   <pre><code class="language-sh">sudo -s
@@ -174,11 +174,10 @@ echo 'hdmi_mode=51'>> /boot/config</code></pre>
                <br><br>
                <h2><strong>3. Install ROS Noetic</strong></h2>
                <p>To install ROS Noetic on our Raspberry Pi, we first need to add the ROS Noetic repository to our system. This ensures that we can download and install ROS Noetic directly from its official source. Follow these steps in a terminal window:</p>
-               <br>
+
                <h3>3.1 Add the ROS Noetic repository to system's software sources</h3>
                <pre><code class="language-sh">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-noetic.list'</code></pre>
                <p>This command creates a new file in <code class="language-sh">/etc/apt/sources.list.d/</code>, which lists the ROS Noetic repository as a source for software packages.</p>
-               <br>
                <h3>3.2 Import the ROS package signing key</h3>
                <pre><code class="language-sh">sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recvkey C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></pre>
                <p>This step authenticates the repository, ensuring that our system trusts the packages coming from it, which is crucial for security.</p>
@@ -193,7 +192,7 @@ echo 'hdmi_mode=51'>> /boot/config</code></pre>
                <br><br>
                <h2><strong>4. Setup Python Dependencies for ROS Noetic</strong></h2>
                <p>To ensure a smooth ROS Noetic setup on Debian Buster, it's important to install several prerequisite packages that ROS depends on, including Python development tools, build essentials, and specific Python libraries. Here's a streamlined guide to help you through the installation process:</p>
-               <br>
+
                <h3>4.1 Update package lists</h3>
                <p>Update your package lists to ensure you have the latest versions of the packages and their dependencies:</p>
                <pre><code class="language-sh">sudo apt update</code></pre>
@@ -240,7 +239,7 @@ sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
                <br><br>
                <h2><strong>5. Setup ROS Noetic</strong></h2>
                <p>Setting up ROS Noetic on your system involves initializing the ROS dependency management tool, <code class="language-sh">rosdep</code>, and using <code class="language-sh">rosinstall_generator</code> and <code class="language-sh">wstool</code> to manage your source workspace. Here's a breakdown of the steps you provided, refined for clarity and completeness:</p>
-               <br>
+ 
                <h3>5.1 Initialize <code class="language-sh">rosdep</code></h3>
                <p><code class="language-sh">rosdep</code> is a command-line tool for installing system dependencies for ROS packages. To initialize it, run:</p>
                <pre><code class="language-sh">sudo rosdep init && rosdep update</code></pre>
@@ -252,22 +251,22 @@ sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
                   <p>Just ignore and continue doing next step!</p>
                </div>
                <br>
-               <br>
+
                <h3>5.2 Create a ROS workspace</code></h3>
                <p>ROS workspaces are directories where you can build ROS packages. Create a new workspace for ROS Noetic and navigate into it with:</p>
                <pre><code class="language-sh">mkdir -p ~/ros_catkin_ws && cd ~/ros_catkin_ws</code></pre>
                <p>This creates a directory named <code class="language-sh">ros_catkin_ws</code> in your home folder and changes the current directory to it.</p>
-               <br>
+
                <h3>5.3 Generate a ROS installation manifest</code></h3>
                <p>Use <code class="language-sh">rosinstall_generator</code> to create a custom ROS installation manifest. This tool helps you specify which ROS packages you want to include in your workspace.</p>
                <pre><code class="language-sh">rosinstall_generator ros_comm common_msgs ros_tutorials rviz --rosdistro noetic --deps --wet-only --tar > noetic-ros_comm-wet.rosinstall</code></pre>
                <p>This command generates a <code class="language-sh">.rosinstall</code> file for the ROS communication libraries, common message types, tutorials, and RViz, along with their dependencies, specifically for ROS Noetic.</p>
-               <br>
+
                <h3>5.4 Initialize your workspace with <code class="language-sh">wstool</code></h3>
                <p><code class="language-sh">wstool</code> is a command-line tool for managing source code repositories in your ROS workspace.</p>
                <pre><code class="language-sh">wstool init src noetic-ros_comm-wet.rosinstall</code></pre>
                <p>This initializes your workspace's <code class="language-sh">src</code> directory based on the <code class="language-sh">.rosinstall</code> file, pulling in the specified sources.</p>
-               <br>
+
                <h3>5.5 Install dependencies using <code class="language-sh">rosdep</code></h3>
                <p>Finally, install any missing dependencies for the packages in your workspace with <code class="language-sh">rosdep</code>. This command checks your <code class="language-sh">src</code> directory for packages, identifies their system dependencies, and installs them.</p>
                <pre><code class="language-sh">rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r --os=debian:buster</code></pre>
