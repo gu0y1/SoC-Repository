@@ -1,0 +1,405 @@
+<!doctype html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-49C0EJEDEC');
+</script>
+<style>
+   .waiting { color: orange; }
+   .completed { color: green; }
+   .check{
+   border-width:5px;
+   border-style:solid;
+   border-color:gray;
+   }
+   .warning{
+   border-width:5px;
+   border-style:solid;
+   border-color:red;
+   }
+   .debug{
+   border-width:5px;
+   border-style:solid;
+   border-color:purple;
+   }
+   .bonus{
+   border-width:5px;
+   border-style:solid;
+   border-color:purple red green blue;
+   }
+</style>
+<html lang="en" class="no-js">
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>Chen Guoyi - CG2111A Tutorial</title>
+      <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+      <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+      <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+      <link href="https://comp.nus.edu.sg/~guoyi/src/prism.css" rel="stylesheet" />
+   </head>
+   <body>
+      <header>
+         <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+         <nav>
+            <ul>
+               <li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+               <li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+               <li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+            </ul>
+         </nav>
+      </header>
+      <section>
+         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / tutorial / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a">cg2111a</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">ros-setup</a></strong>
+      </section>
+      <section id="pageContent">
+         <main role="main">
+            <article>
+               <h1>Tutorial: Robot Operating System for EPP2</h1>
+               <hr>
+               <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target="_blank">CG2111A</a>] </strong><br>
+                  <br>
+                  <strong>Author: </strong> Chen Guoyi<br>
+                  <strong>Supervisors: </strong>Boyd Anderson; Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
+               </p>
+            </article>
+         </main>
+         <aside>
+            <div>
+               <center>
+                  <br><br>
+                  <strong>Directory: </strong><br><br>
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td></td>
+                           <td colspan="3"><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros">Tutorial Homepage</a></td>
+                        </tr>
+                        <tr>
+                           <td>&#10148;</td>
+                           <td>├</td>
+                           <td>&nbsp;1. Setup ROS on RPi 4</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">2. Talker & Listener</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">3. RPi LiDAR & SLAM</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">4. ROS Networking</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>└</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">References</a></td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <br><br><br>
+            </div>
+            </center>
+         </aside>
+         <main_noaside role="main">
+            <article>
+               <center>
+                  <h1>Setup ROS on Raspberry Pi 4</h1>
+               </center>
+               <p>This tutorial will take you from a basic operating system image to independently building up the Robot Operating System (ROS). Engaging in this setup personally will not only provide you with a deeper understanding of the fundamental principles of operating systems and ROS architecture but will also enhance your practical skills and theoretical knowledge within a real-world framework. This first-hand experience is invaluable for your future learning in advanced modules, such as <a href="https://nusmods.com/courses/EE3305/robotic-system-design" target="_blank">EE3305 Robotic System Design</a>, and will be a significant asset for any robotics-related internships.</p>
+               <p>Be aware that the setup process can take more than 3 hours to complete. To accommodate different needs and schedules, the CG2111A Teaching Team has prepared a backup plan for you: an OS image that already includes ROS pre-installed. This allows you to bypass the setup process described in this tutorial and jump straight into using ROS with a ready-to-use image. Please refer to the Lab Instructions in Canvas.</p>
+               <p>Each step in this tutorial is crucial, with later steps building upon the successful completion of earlier ones. Therefore, after finishing each step, please make sure to check the corresponding checkbox in this tutorial. This action will change the status from "<font color=orange>Waiting Completion</font>" to "<font color=green>Marked as Completed</font>." This simple practice ensures you're progressing correctly through the material and helps prevent any oversight that could impact later stages.</p>
+               <h2><strong>1. Download Latest Buster Version of Raspberry Pi OS Image</strong></h2>
+               <p>Please be aware that ROS has evolved over time, leading to multiple versions and the introduction of ROS, which comes with its own set of packages and configurations. This diversity can lead to conflicts between different versions. It's important to navigate these differences carefully.</p>
+               <p>In our case, we're focusing on the ROS version known as "<strong>Noetic</strong>," which is specifically designed to operate on <strong>Debian 10</strong>, also known as <strong>Buster</strong>. If you're using a Raspberry Pi 4, ensure you download the <u>latest Buster version of Raspberry Pi OS (Legacy)</u>, available at: <a href="https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/" target="_blank">https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/</a>.</p>
+               <iframe src= "https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/"  width= "100%" height= "300px" style="border: 2px solid #ccc;"></iframe><br>
+               <p>This tutorial uses <strong>2023-05-03-raspios-buster-armhf.img.xz</strong> as OS Image. You can <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/OS_IMG/2023-05-03-raspios-buster-armhf.img.xz">download</a> this image from NUS SoC Mirror Server.
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check, have you downloaded the correct image?
+                     <input type="checkbox" class="task-checkbox" id="task1"><label for="task1" class="status waiting">Waiting Complete</label>
+                  </p>
+               </div>
+               <br><br>
+               <h2><strong>2. Setup Raspberry Pi OS</strong></h2>
+               <div class="warning">
+                  <strong style="color:white; background-color:red;">Before You Do&nbsp;</strong>
+                  <p>Important: back up everything on your Raspberry Pi 4 before proceeding, this operation will erase your SD card and all of your work!</p>
+               </div>
+               <p>Similar to the process in the previous session, utilize the Raspberry Pi Imager to flash the custom image you've previously downloaded onto your Raspberry Pi's SD card. Be prepared for this step to take some time. Start the image writing process, and while it progresses, continue reading ahead!</p>
+               <p>Ensuring a successful VNC connection to your Raspberry Pi is pivotal for the forthcoming steps in our tutorial. To verify that your operating system setup has been completed accurately, here's a concise checklist to guide your self-review:</p>
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check:
+                  <ol>
+                     <li>The Raspberry Pi OS is installed correctly on your SD card.</li>
+                     <li>Your PC and your Raspberry Pi is connected to the same WiFi, the WiFi <u>MUST</u> have internet access!</li>
+                     <li>Turn on the VNC permission from 'Raspberry Pi Configuration'.</li>
+                  </ol>
+                  Have you done all the tasks correctly above?
+                  <input type="checkbox" class="task-checkbox" id="task2"><label for="task2" class="status waiting">Waiting Complete</label></p>
+               </div>
+               <br>
+               <div class="debug">
+                  <strong style="color:white; background-color:purple;">Debugging Time&nbsp;</strong>
+                  <p>Note: If you encounter the “<strong>Cannot currently show the desktop</strong>” error while using VNC, you can resolve this issue by editing the <code class="language-sh">boot/config.txt</code> file on your Raspberry Pi.</p>
+                  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/img/hdmi.png" width="300"></center>
+                  <p>To do this, open a terminal on your Raspberry Pi and run the following commands:</p>
+                  <pre><code class="language-sh">sudo -s
+echo 'hdmi_force_hotplug=1'>> /boot/config.txt
+echo 'hdmi_group=2'>> /boot/config.txt
+echo 'hdmi_mode=51'>> /boot/config</code></pre>
+                  <p>Please ensure no warning or error message when you do so, then reboot your Raspberry Pi 4 with this code:</p>
+                  <pre><code class="language-sh">sudo reboot</code></pre>
+                  <p>This issue should be solved elegantly!</p>
+               </div>
+               <br><br>
+               <h2><strong>3. Install ROS Noetic</strong></h2>
+               <p>To install ROS Noetic on our Raspberry Pi, we first need to add the ROS Noetic repository to our system. This ensures that we can download and install ROS Noetic directly from its official source. Follow these steps in a terminal window:</p>
+
+               <h3>3.1 Add the ROS Noetic repository to system's software sources</h3>
+               <pre><code class="language-sh">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-noetic.list'</code></pre>
+               <p>This command creates a new file in <code class="language-sh">/etc/apt/sources.list.d/</code>, which lists the ROS Noetic repository as a source for software packages.</p>
+               <h3>3.2 Import the ROS package signing key</h3>
+               <pre><code class="language-sh">sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recvkey C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></pre>
+               <p>This step authenticates the repository, ensuring that our system trusts the packages coming from it, which is crucial for security.</p>
+               <p>After completing these steps, our system will be ready to install ROS Noetic packages.</p>
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check by running the codes in this section; you received no warnings or errors. The successful message from the terminal should look like this:</p>
+                  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/img/3.2.png" width=80%></center>
+                  <br>
+                  Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task3"><label for="task3" class="status waiting">Waiting Complete</label></p>
+               </div>
+               <br><br>
+               <h2><strong>4. Setup Python Dependencies for ROS Noetic</strong></h2>
+               <p>To ensure a smooth ROS Noetic setup on Debian Buster, it's important to install several prerequisite packages that ROS depends on, including Python development tools, build essentials, and specific Python libraries. Here's a streamlined guide to help you through the installation process:</p>
+
+               <h3>4.1 Update package lists</h3>
+               <p>Update your package lists to ensure you have the latest versions of the packages and their dependencies:</p>
+               <pre><code class="language-sh">sudo apt update</code></pre>
+               <br>
+               <h3>4.2 Install ROS Prerequisites</h3>
+               <p>Install ROS prerequisites including Python tools for ROS, build essentials, and CMake, which are necessary for compiling ROS packages:</p>
+               <pre><code class="language-sh">sudo apt-get install -y python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential cmake</code></pre>
+               <br>
+               <h3>4.3 Install Additional Python Dependencies</h3>
+               <br>
+               <h4>4.3.1 Install Eigen Library</h4>
+               <p>Address additional Python dependencies that are crucial for ROS development. This includes installing Eigen (a C++ template library for linear algebra) and ensuring Python 3 is installed:</p>
+               <pre><code class="language-sh">sudo apt-get install libeigen3-dev python3</code></pre>
+               <br>
+               <h4>4.3.2 Install Python YAML Library</h4>
+               <p>Install YAML library, required for parsing YAML files, which are frequently used in ROS for configuration and parameter files:</p>
+               <pre><code class="language-sh">sudo apt-get install python3-yaml</code></pre>
+               <br>
+               <h4>4.3.3 Install Catkin Package</h4>
+               <p>Install catkin_pkg, a Python library essential for building and packaging ROS packages:</p>
+               <pre><code class="language-sh">sudo pip3 install --upgrade pip
+sudo pip3 install catkin_pkg</code></pre>
+               <br>
+               <h4>4.3.4 Install SIP and PyQt5 Development Tools</h4>
+               <p>Install SIP and PyQt5 development tools, which are used for creating graphical user interfaces with Python. These are not directly related to ROS but might be useful for developing custom tools:</p>
+               <p><strong>You should run the code below line by line!</strong></p>
+               <pre><code class="language-sh">sudo apt-get install sip-dev pyqt5-dev python-sip-dev pyqt5-dev-tools
+sudo apt-get install python3-pyqt5
+sudo pip3 install sip
+sudo pip3 install PyQt5-sip
+sudo apt-get install python3-sip python3-sip-dev
+sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
+               <br>
+               <h4>4.3.5 Install <code class="language-sh">python3-empy</code></h4>
+               <p>Finally, install <code class="language-sh">python3-empy</code>, a template system for Python that's used in the generation of ROS package files:</p>
+               <pre><code class="language-sh">sudo apt-get install python3-empy</code></pre>
+               <p>After running these commands, your system should be well-prepared for ROS Noetic development, with all the necessary tools and libraries installed. Make sure to run <code class="language-sh">sudo apt update</code> before installing new packages to ensure you're getting the latest versions.</p>
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check by running the codes in this section; you received no warnings or errors. </p>
+                  <br>
+                  Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task4"><label for="task4" class="status waiting">Waiting Complete</label></p>
+               </div>
+               <br><br>
+               <h2><strong>5. Setup ROS Noetic</strong></h2>
+               <p>Setting up ROS Noetic on your system involves initializing the ROS dependency management tool, <code class="language-sh">rosdep</code>, and using <code class="language-sh">rosinstall_generator</code> and <code class="language-sh">wstool</code> to manage your source workspace. Here's a breakdown of the steps you provided, refined for clarity and completeness:</p>
+ 
+               <h3>5.1 Initialize <code class="language-sh">rosdep</code></h3>
+               <p><code class="language-sh">rosdep</code> is a command-line tool for installing system dependencies for ROS packages. To initialize it, run:</p>
+               <pre><code class="language-sh">sudo rosdep init && rosdep update</code></pre>
+               <p>This command initializes <code class="language-sh">rosdep</code> and then updates its database to ensure it has the latest information about available packages and dependencies.</p>
+               <div class="debug">
+                  <strong style="color:white; background-color:purple;">Debugging Time&nbsp;</strong>
+                  <p>Note: If you encounter error messages like: </p>
+                  <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/img/5.1.png" width=60%></center>
+                  <p>Just ignore and continue doing next step!</p>
+               </div>
+               <br>
+
+               <h3>5.2 Create a ROS workspace</code></h3>
+               <p>ROS workspaces are directories where you can build ROS packages. Create a new workspace for ROS Noetic and navigate into it with:</p>
+               <pre><code class="language-sh">mkdir -p ~/ros_catkin_ws && cd ~/ros_catkin_ws</code></pre>
+               <p>This creates a directory named <code class="language-sh">ros_catkin_ws</code> in your home folder and changes the current directory to it.</p>
+
+               <h3>5.3 Generate a ROS installation manifest</code></h3>
+               <p>Use <code class="language-sh">rosinstall_generator</code> to create a custom ROS installation manifest. This tool helps you specify which ROS packages you want to include in your workspace.</p>
+               <pre><code class="language-sh">rosinstall_generator ros_comm common_msgs ros_tutorials rviz --rosdistro noetic --deps --wet-only --tar > noetic-ros_comm-wet.rosinstall</code></pre>
+               <p>This command generates a <code class="language-sh">.rosinstall</code> file for the ROS communication libraries, common message types, tutorials, and RViz, along with their dependencies, specifically for ROS Noetic.</p>
+
+               <h3>5.4 Initialize your workspace with <code class="language-sh">wstool</code></h3>
+               <p><code class="language-sh">wstool</code> is a command-line tool for managing source code repositories in your ROS workspace.</p>
+               <pre><code class="language-sh">wstool init src noetic-ros_comm-wet.rosinstall</code></pre>
+               <p>This initializes your workspace's <code class="language-sh">src</code> directory based on the <code class="language-sh">.rosinstall</code> file, pulling in the specified sources.</p>
+
+               <h3>5.5 Install dependencies using <code class="language-sh">rosdep</code></h3>
+               <p>Finally, install any missing dependencies for the packages in your workspace with <code class="language-sh">rosdep</code>. This command checks your <code class="language-sh">src</code> directory for packages, identifies their system dependencies, and installs them.</p>
+               <pre><code class="language-sh">rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r --os=debian:buster</code></pre>
+               <p>The <code class="language-sh">-y</code> flag automatically confirms the installation of dependencies, <code class="language-sh">--from-paths src</code> tells <code class="language-sh">rosdep</code> where to look for packages (in the <code class="language-sh">src</code> directory of your workspace), <code class="language-sh">--ignore-src</code> skips installing packages that are already present in the source directory, <code class="language-sh">--rosdistro noetic</code> specifies the ROS distribution, <code class="language-sh">-r</code> continues installing dependencies even if some are missing, and <code class="language-sh">--os=debian:buster</code> specifies your operating system and version.</p>
+               <p>After completing these steps, your ROS Noetic workspace will be set up with the necessary packages and dependencies, ready for development.</p>
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check by running the codes in this section; you received no warnings or errors. </p>
+                  <p>Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task5"><label for="task5" class="status waiting">Waiting Complete</label></p>
+               </div>
+               <br><br>
+               <h2><strong>6. Build ROS Noetic</strong></h2>
+               <p>To build ROS Noetic from source and ensure it's properly installed on your system, the command you provided outlines a critical step in compiling the ROS workspace you've prepared. Here's a detailed explanation of what this command does and some slight refinements for clarity:</p>
+               <pre><code class="language-sh">sudo src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3</code></pre>
+               <p>Here are explainations of parameters of the command above:</p>
+               <ul>
+                  <li><code class="language-sh">src/catkin/bin/catkin_make_isolated</code>: This invokes the <code class="language-sh">catkin_make_isolated</code> script, which is part of the catkin toolset designed to build ROS packages. Unlike <code class="language-sh">catkin_make</code>, <code class="language-sh">catkin_make_isolated</code> builds each package in isolation, avoiding potential conflicts between packages.</li>
+                  <li><code class="language-sh">--install</code>: This flag indicates that the build artifacts should be installed after compilation, making them available system-wide.</li>
+                  <li><code class="language-sh">-DCMAKE_BUILD_TYPE=Release</code>: Sets the build type to "Release," optimizing the compiled software for performance rather than debugging ease. This is useful for a production environment or when you don't need detailed debug information.</li>
+                  <li><code class="language-sh">--install-space /opt/ros/noetic</code>: Specifies the installation directory. This is where the built packages will be installed. <code class="language-sh">/opt/ros/noetic</code> is the conventional location for ROS installations, keeping different ROS distributions separate.</li>
+                  <li><code class="language-sh">-j1</code>: This option limits the build process to use only one job at a time. Building with a single job can reduce memory usage during the compilation, which is beneficial on systems with limited resources.</li>
+                  <li><code class="language-sh">-DPYTHON_EXECUTABLE=/usr/bin/python3</code>: Explicitly sets the path to the Python 3 executable. This is important for ensuring that ROS uses Python 3, as ROS Noetic is designed to work with Python 3 due to Python 2 reaching the end of its life.</li>
+               </ul>
+               <p>Executing this command will compile and install ROS Noetic to the specified install space, making it available for development and use.</p>
+               <br>
+               <div class="warning">
+                  <strong style="color:white; background-color:red;">Warning!&nbsp;</strong>
+                  <p>Building ROS from source can be time-consuming, especially with <code class="language-sh">-j1</code>, so it might take a while to complete. You may relax and wait until it is done!</p>
+                  <p><strong>Why not try to play a game to help SoC train AI? <a href="https://www.comp.nus.edu.sg/~guoyi/project/urop/training/" target="_blank">Click here to play!</a></strong></p>
+               </div>
+               <br><br>
+               <div class="debug">
+                  <strong style="color:white; background-color:purple;">Debugging Time&nbsp;</strong>
+                  <p>Note: If you encounter error messages like <code class="language-sh">Command failed, exiting.</code>. This highly likely means you did not install and set up Python prerequisites correctly. Please redo section 4 again and retry running section 6 code.</p>
+                  <p>This issue should be solved elegantly!</p>
+               </div>
+               <br><br>
+               <div class="check">
+                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+                  <p>Please check by running the codes in this section; you received no warnings or errors. </p>
+                  Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task6"><label for="task6" class="status waiting">Waiting Complete</label></p>
+               </div>
+               <br><br>
+               <h2><strong>7. Initialize and Test ROS Noetic</strong></h2>
+               <p>We will use the pre-installed turtlesim to test the functionalities of ROS. Before we run the ROS, we need install some python packages manually. Please enter a terminal, and use these commands to install packages:</p>
+               <pre><code class="language-sh">sudo apt update
+sudo pip3 install defusedxml
+sudo pip3 install rospkg
+sudo pip3 install netifaces
+</code></pre>
+               Then, please follow these steps to test your ROS:</p>
+               <ol>
+                  <li>Open a terminal and enter <code class="language-sh">source /opt/ros/noetic/setup.bash</code>. [Note: You need to do this for all new terminals to add the packages to the ROS searching directory list. The configuration only works for the current terminal.]</li>
+                  <li>
+                     Enter <code class="language-sh">roscore</code> to start the ROS master program, you will see:<br><br>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/img/roscore.png" width=80%></center>
+                     <br>
+                  </li>
+                  <li>
+                     Open another terminal, perform the command from step 1 again, then enter <code class="language-sh">rosrun turtlesim turtlesim_node</code>. You should see a window titled "TurtleSim" on your screen:<br><br>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/img/turtle.png" width=80%></center>
+                     <br>
+                     This window simulates a turtle. Note: The turtle drawing is random, so your turtle may appear differently. Do NOT close the turtlesim window.
+                  </li>
+                  <li>
+                     To find out how many ROS nodes are involved, open a new terminal and enter <code class="language-sh">rosnode list</code>. You should see the following output: <br>
+                     <pre><code class="language-sh">/rosout
+/turtlesim</code></pre>
+                     The <code class="language-sh">turtlesim</code> node is what you see visualized, while <code class="language-sh">rosout</code> is the default console log output.
+                  </li>
+                  <li>
+                     In a new terminal, perform the command from step 1, then enter <code class="language-sh">rosrun turtlesim turtle_teleop_key</code>. This command starts another ROS node <code class="language-sh">turtle_teleop_key</code> which allows you to control the turtle simulation using your keyboard. Use the arrow keys to move your turtle around, here is a GIF demostration:<br><br>
+                     <center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol/img/demo.gif" width=80%></center>
+                     <br>
+                  </li>
+               </ol>
+               <p>This hands-on experience with turtlesim helps solidify your understanding of ROS Noetic's basic functionalities and node interaction.</p>
+               <center>
+                  <h1>· End of Tutorial · </h1>
+               </center>
+               <hr>
+               <div class="bonus">
+                  <strong style="color:black; background-color:yellow;">★ Bonus Time!&nbsp;</strong>
+                  <center>
+                     <h1><font color = "green">You have done <span id="completedCount">0</span> out of 6!</font></h1>
+                  </center>
+                  <p>Hip, hip, hooray! You have successfully set up the ROS on your Raspberry Pi by yourself! We highly recommend trying out <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Tutorial 2: Listener & Talker</a> Exercise to familiarize yourself with the ROS. Detailed instructions will be provided in the next tutorial.</p>
+                  <br>
+               </div>
+               <hr>
+               <br>
+               <h2> References:</h2>
+               <ul>
+                  <li> Prof. Boyd Anderson; CG2111A, AY22/23 Semester II;
+               </ul>
+            </article>
+            <center>
+               <strong>
+                  <p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros">&lt; Prev</a> &nbsp;Tutorial Homepage &nbsp;&nbsp; | &nbsp;&nbsp; Tutorial 2: Listener & Talker &nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Next &gt;</a></p>
+               </strong>
+            </center>
+         </main_noaside>
+      </section>
+      <footer>
+         <p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+         </p>
+      </footer>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const checkboxes = document.querySelectorAll('.task-checkbox');
+         
+             checkboxes.forEach(function(checkbox) {
+                 const label = checkbox.nextElementSibling; // 获取复选框旁边的label
+                 checkbox.addEventListener('change', function() {
+                     if (this.checked) {
+                         label.textContent = 'Marked as completed';
+                         label.classList.remove('waiting');
+                         label.classList.add('completed');
+                     } else {
+                         label.textContent = 'Waiting Complete';
+                         label.classList.remove('completed');
+                         label.classList.add('waiting');
+                     }
+                     updateCompletedCount();
+                 });
+             });
+         
+             function updateCompletedCount() {
+                 const completedCount = document.querySelectorAll('.task-checkbox:checked').length;
+                 document.getElementById('completedCount').textContent = completedCount;
+             }
+         });
+      </script>
+      <script src="https://comp.nus.edu.sg/~guoyi/src/prism.js"></script>
+   </body>
+</html>
