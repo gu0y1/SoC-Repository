@@ -66,8 +66,8 @@
                <hr>
                <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target="_blank">CG2111A</a>] </strong><br>
                   <br>
-                  <strong>Author: </strong> Chen Guoyi<br>
-                  <strong>Supervisors: </strong>Boyd Anderson; Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>Author: </strong> Boyd Anderson; Chen Guoyi<br>
+                  <strong>Supervisors: </strong> Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
                   <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
                </p>
             </article>
@@ -110,7 +110,7 @@
                         <tr>
                            <td></td>
                            <td>└</td>
-                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">References</a></td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference">References</a></td>
                            <td></td>
                         </tr>
                      </tbody>
@@ -156,7 +156,8 @@
                <br>
                <h3>1.1 Adding Required Packages and Building Again</h3>
                <p>First, you need to initialize the ROS environment variables. Open a terminal and execute the following command:</p>
-               <pre><code class="language-sh">source /opt/ros/noetic/setup.bash</code></pre>
+               <pre><code class="language-sh">source /opt/ros/noetic/setup.bash
+sudo pip3 install -U rosinstall rosinstall_generator wstool rospkg</code></pre>
                <p>Next, use the <code class="language-sh">rosinstall_generator</code> tool to fetch the installation information for the <code class="language-sh">rplidar_ros</code>, <code class="language-sh">hector_slam</code>, and <code class="language-sh">rqt_graph</code> packages, and merge them into the <code class="language-sh">src</code> directory of your workspace. Execute the following command:</p>
                <pre><code class="language-sh">rosinstall_generator rplidar_ros hector_slam rqt_graph --rosdistro noetic --deps --wet-only --tar | wstool merge -t src -
 wstool update -t src -j8</code></pre>

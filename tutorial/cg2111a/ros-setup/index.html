@@ -46,6 +46,9 @@
       <link href="https://comp.nus.edu.sg/~guoyi/src/prism.css" rel="stylesheet" />
    </head>
    <body>
+   <div style="background-color: #6495ED; color: black; width: 100%; text-align: center; padding: 10px 0;"><strong>
+  We are still using the Debian 10 version for the AY23/24 Cohort; please navigate to the old version of <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol">tutorial 1</a>.</strong>
+</div>
       <header>
          <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
          <nav>
@@ -66,8 +69,8 @@
                <hr>
                <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target="_blank">CG2111A</a>] </strong><br>
                   <br>
-                  <strong>Author: </strong> Chen Guoyi<br>
-                  <strong>Supervisors: </strong>Boyd Anderson; Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>Author: </strong> Boyd Anderson; Chen Guoyi<br>
+                  <strong>Supervisors: </strong> Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
                   <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
                </p>
             </article>
@@ -110,7 +113,7 @@
                         <tr>
                            <td></td>
                            <td>└</td>
-                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">References</a></td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference">References</a></td>
                            <td></td>
                         </tr>
                      </tbody>
@@ -122,16 +125,15 @@
          <main_noaside role="main">
             <article>
                <center>
-                  <h1>Setup ROS on Raspberry Pi 4</h1>
+                  <h1>Setup ROS on Raspberry Pi 4 (Debian 12)</h1>
                </center>
                <p>This tutorial will take you from a basic operating system image to independently building up the Robot Operating System (ROS). Engaging in this setup personally will not only provide you with a deeper understanding of the fundamental principles of operating systems and ROS architecture but will also enhance your practical skills and theoretical knowledge within a real-world framework. This first-hand experience is invaluable for your future learning in advanced modules, such as <a href="https://nusmods.com/courses/EE3305/robotic-system-design" target="_blank">EE3305 Robotic System Design</a>, and will be a significant asset for any robotics-related internships.</p>
                <p>Be aware that the setup process can take more than 3 hours to complete. To accommodate different needs and schedules, the CG2111A Teaching Team has prepared a backup plan for you: an OS image that already includes ROS pre-installed. This allows you to bypass the setup process described in this tutorial and jump straight into using ROS with a ready-to-use image. Please refer to the Lab Instructions in Canvas.</p>
                <p>Each step in this tutorial is crucial, with later steps building upon the successful completion of earlier ones. Therefore, after finishing each step, please make sure to check the corresponding checkbox in this tutorial. This action will change the status from "<font color=orange>Waiting Completion</font>" to "<font color=green>Marked as Completed</font>." This simple practice ensures you're progressing correctly through the material and helps prevent any oversight that could impact later stages.</p>
-               <h2><strong>1. Download Latest Buster Version of Raspberry Pi OS Image</strong></h2>
+               <h2><strong>1. Download Latest Bookworm Version of Raspberry Pi OS Image</strong></h2>
                <p>Please be aware that ROS has evolved over time, leading to multiple versions and the introduction of ROS, which comes with its own set of packages and configurations. This diversity can lead to conflicts between different versions. It's important to navigate these differences carefully.</p>
-               <p>In our case, we're focusing on the ROS version known as "<strong>Noetic</strong>," which is specifically designed to operate on <strong>Debian 10</strong>, also known as <strong>Buster</strong>. If you're using a Raspberry Pi 4, ensure you download the <u>latest Buster version of Raspberry Pi OS (Legacy)</u>, available at: <a href="https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/" target="_blank">https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/</a>.</p>
-               <iframe src= "https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/"  width= "100%" height= "300px" style="border: 2px solid #ccc;"></iframe><br>
-               <p>This tutorial uses <strong>2023-05-03-raspios-buster-armhf.img.xz</strong> as OS Image. You can <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/OS_IMG/2023-05-03-raspios-buster-armhf.img.xz">download</a> this image from NUS SoC Mirror Server.
+               <p>In our case, we're focusing on the ROS version known as "<strong>Noetic</strong>," which is specifically designed to operate on <strong>Debian 12</strong>, also known as <strong>Bookworm</strong>. </p>
+               <p>This tutorial uses <strong>2023-12-05-raspios-bookworm-arm64-full</strong> as OS Image. You can <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/OS_IMG/2023-12-05-raspios-bookworm-arm64.img.xz">download</a> this image from NUS SoC Mirror Server.
                <div class="check">
                   <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
                   <p>Please check, have you downloaded the correct image?
@@ -176,10 +178,10 @@ echo 'hdmi_mode=51'>> /boot/config</code></pre>
                <p>To install ROS Noetic on our Raspberry Pi, we first need to add the ROS Noetic repository to our system. This ensures that we can download and install ROS Noetic directly from its official source. Follow these steps in a terminal window:</p>
 
                <h3>3.1 Add the ROS Noetic repository to system's software sources</h3>
-               <pre><code class="language-sh">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-noetic.list'</code></pre>
+               <pre><code class="language-sh">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu bookworm main" > /etc/apt/sources.list.d/ros-latest.list'</code></pre>
                <p>This command creates a new file in <code class="language-sh">/etc/apt/sources.list.d/</code>, which lists the ROS Noetic repository as a source for software packages.</p>
                <h3>3.2 Import the ROS package signing key</h3>
-               <pre><code class="language-sh">sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recvkey C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></pre>
+               <pre><code class="language-sh">sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></pre>
                <p>This step authenticates the repository, ensuring that our system trusts the packages coming from it, which is crucial for security.</p>
                <p>After completing these steps, our system will be ready to install ROS Noetic packages.</p>
                <div class="check">
@@ -191,51 +193,49 @@ echo 'hdmi_mode=51'>> /boot/config</code></pre>
                </div>
                <br><br>
                <h2><strong>4. Setup Python Dependencies for ROS Noetic</strong></h2>
-               <p>To ensure a smooth ROS Noetic setup on Debian Buster, it's important to install several prerequisite packages that ROS depends on, including Python development tools, build essentials, and specific Python libraries. Here's a streamlined guide to help you through the installation process:</p>
+			   <p><strong><font color="red">You should strictly run these commands line-by-line!</font></strong></p>
+               <h3>4.1 Prepare ROS Workspace</h3>
+<p>Create and navigate to the ROS catkin workspace:</p>
+<pre><code class="language-sh">mkdir -p ~/ros_catkin_ws &amp;&amp; cd ~/ros_catkin_ws
+mkdir apt_fix &amp;&amp; cd apt_fix</code></pre>
+<br>
+<h3>4.2 Install Build Dependencies</h3>
+<p>Install necessary packages for building dependencies:</p>
+<pre><code class="language-sh">sudo apt install -y packaging-dev debian-keyring devscripts equivs</code></pre>
+<br>
+<h3>4.3 Build and Install HDDTemp</h3>
+<p>Download, build, and install the HDDTemp package:</p>
+<pre><code class="language-sh">dget -x http://deb.debian.org/debian/pool/main/h/hddtemp/hddtemp_0.3-beta15-54.dsc
+cd hddtemp-0.3-beta15
+sudo mk-build-deps --install --remove
+dpkg-buildpackage -us -uc
+sudo apt install -y ../hddtemp_*_*.deb
+sudo apt purge -y hddtemp-build-deps
+cd ..</code></pre>
+<br>
+<h3>4.4 Install Required ROS Packages</h3>
+<p>Download and install specific ROS packages required for setup:</p>
+<pre><code class="language-sh">wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/liblog4cxx11_0.11.0-2_arm64.deb
+wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/libogre-1.9.0v5_1.9.0+dfsg1-12.1_arm64.deb
+wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/libogre-1.9-dev_1.9.0+dfsg1-12.1_arm64.deb
+wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/liblog4cxx-dev_0.11.0-2_arm64.deb
+wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/libgeographic-dev_1.49-2_amd64.deb
+wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/libgeographic17_1.49-4_arm64.deb
+wget http://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup/archive/deb/liborocos-kdl1.4_1.4.0-7build2_arm64.deb
 
-               <h3>4.1 Update package lists</h3>
-               <p>Update your package lists to ensure you have the latest versions of the packages and their dependencies:</p>
-               <pre><code class="language-sh">sudo apt update</code></pre>
-               <br>
-               <h3>4.2 Install ROS Prerequisites</h3>
-               <p>Install ROS prerequisites including Python tools for ROS, build essentials, and CMake, which are necessary for compiling ROS packages:</p>
-               <pre><code class="language-sh">sudo apt-get install -y python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential cmake</code></pre>
-               <br>
-               <h3>4.3 Install Additional Python Dependencies</h3>
-               <br>
-               <h4>4.3.1 Install Eigen Library</h4>
-               <p>Address additional Python dependencies that are crucial for ROS development. This includes installing Eigen (a C++ template library for linear algebra) and ensuring Python 3 is installed:</p>
-               <pre><code class="language-sh">sudo apt-get install libeigen3-dev python3</code></pre>
-               <br>
-               <h4>4.3.2 Install Python YAML Library</h4>
-               <p>Install YAML library, required for parsing YAML files, which are frequently used in ROS for configuration and parameter files:</p>
-               <pre><code class="language-sh">sudo apt-get install python3-yaml</code></pre>
-               <br>
-               <h4>4.3.3 Install Catkin Package</h4>
-               <p>Install catkin_pkg, a Python library essential for building and packaging ROS packages:</p>
-               <pre><code class="language-sh">sudo pip3 install --upgrade pip
-sudo pip3 install catkin_pkg</code></pre>
-               <br>
-               <h4>4.3.4 Install SIP and PyQt5 Development Tools</h4>
-               <p>Install SIP and PyQt5 development tools, which are used for creating graphical user interfaces with Python. These are not directly related to ROS but might be useful for developing custom tools:</p>
-               <p><strong>You should run the code below line by line!</strong></p>
-               <pre><code class="language-sh">sudo apt-get install sip-dev pyqt5-dev python-sip-dev pyqt5-dev-tools
-sudo apt-get install python3-pyqt5
-sudo pip3 install sip
-sudo pip3 install PyQt5-sip
-sudo apt-get install python3-sip python3-sip-dev
-sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
-               <br>
-               <h4>4.3.5 Install <code class="language-sh">python3-empy</code></h4>
-               <p>Finally, install <code class="language-sh">python3-empy</code>, a template system for Python that's used in the generation of ROS package files:</p>
-               <pre><code class="language-sh">sudo apt-get install python3-empy</code></pre>
-               <p>After running these commands, your system should be well-prepared for ROS Noetic development, with all the necessary tools and libraries installed. Make sure to run <code class="language-sh">sudo apt update</code> before installing new packages to ensure you're getting the latest versions.</p>
-               <div class="check">
-                  <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check by running the codes in this section; you received no warnings or errors. </p>
-                  <br>
-                  Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task4"><label for="task4" class="status waiting">Waiting Complete</label></p>
-               </div>
+sudo apt install -y ./*.deb</code></pre>
+
+<p>Ensure all downloaded Debian packages are installed:</p>
+<pre><code class="language-sh">sudo dpkg -i libgeographic17_1.49-4_arm64.deb liblog4cxx11_0.11.0-2_arm64.deb liblog4cxx-dev_0.11.0-2_arm64.deb libogre-1.9.0v5_1.9.0+dfsg1-12.1_arm64.deb libogre-1.9-dev_1.9.0+dfsg1-12.1_arm64.deb liborocos-kdl1.4_1.4.0-7build2_arm64.deb</code></pre>
+<br>
+<div class="check">
+    <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
+    <p>Please verify that after executing the commands in this section, you receive no warnings or errors.</p>
+    <p>Have you completed all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task4"><label for="task4" class="status waiting">Waiting Complete</label></p>
+</div>
+
+			   
+			   
                <br><br>
                <h2><strong>5. Setup ROS Noetic</strong></h2>
                <p>Setting up ROS Noetic on your system involves initializing the ROS dependency management tool, <code class="language-sh">rosdep</code>, and using <code class="language-sh">rosinstall_generator</code> and <code class="language-sh">wstool</code> to manage your source workspace. Here's a breakdown of the steps you provided, refined for clarity and completeness:</p>
@@ -269,8 +269,8 @@ sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
 
                <h3>5.5 Install dependencies using <code class="language-sh">rosdep</code></h3>
                <p>Finally, install any missing dependencies for the packages in your workspace with <code class="language-sh">rosdep</code>. This command checks your <code class="language-sh">src</code> directory for packages, identifies their system dependencies, and installs them.</p>
-               <pre><code class="language-sh">rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r --os=debian:buster</code></pre>
-               <p>The <code class="language-sh">-y</code> flag automatically confirms the installation of dependencies, <code class="language-sh">--from-paths src</code> tells <code class="language-sh">rosdep</code> where to look for packages (in the <code class="language-sh">src</code> directory of your workspace), <code class="language-sh">--ignore-src</code> skips installing packages that are already present in the source directory, <code class="language-sh">--rosdistro noetic</code> specifies the ROS distribution, <code class="language-sh">-r</code> continues installing dependencies even if some are missing, and <code class="language-sh">--os=debian:buster</code> specifies your operating system and version.</p>
+               <pre><code class="language-sh">rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r --os=debian:bookworm</code></pre>
+               <p>The <code class="language-sh">-y</code> flag automatically confirms the installation of dependencies, <code class="language-sh">--from-paths src</code> tells <code class="language-sh">rosdep</code> where to look for packages (in the <code class="language-sh">src</code> directory of your workspace), <code class="language-sh">--ignore-src</code> skips installing packages that are already present in the source directory, <code class="language-sh">--rosdistro noetic</code> specifies the ROS distribution, <code class="language-sh">-r</code> continues installing dependencies even if some are missing, and <code class="language-sh">--os=debian:bookworm</code> specifies your operating system and version.</p>
                <p>After completing these steps, your ROS Noetic workspace will be set up with the necessary packages and dependencies, ready for development.</p>
                <div class="check">
                   <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>

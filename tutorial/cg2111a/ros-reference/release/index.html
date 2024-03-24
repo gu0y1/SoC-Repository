@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-49C0EJEDEC');
+</script>
+<html lang="en" class="no-js">
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>Chen Guoyi - CG2111A Tutorial</title>
+      <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+      <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+      <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+   </head>
+   <style>
+  .container {
+    display: flex; /* 使用flexbox水平布局 */
+    justify-content: space-between; /* 文本和图片分别对齐到容器的左右两侧 */
+    align-items: center; /* 在垂直方向上居中对齐 */
+  }
+  .text-content {
+    /* Adjustments for the text section if needed */
+  }
+  .image-content {
+    height: auto; /* Adjust height automatically to match the text content's height */
+    max-height: 100%; /* Ensure the image is not taller than its container */
+  }
+  .custom-image {
+    display: block; /* Remove any extra space below the image */
+     /* Make sure the image is responsive and does not overflow its container */
+     /* Adjust the height automatically */
+  }
+</style>
+   <body>
+      <header>
+         <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+         <nav>
+            <ul>
+               <li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+               <li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+               <li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+            </ul>
+         </nav>
+      </header>
+      <section>
+         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / tutorial / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a">cg2111a</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference">ros-reference</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference/release">release</a></strong>
+      </section>
+      <section id="pageContent">
+         <main role="main">
+            <article>
+               <h1>Tutorial: Robot Operating System for EPP2</h1>
+               <hr>
+               <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target=_blank>CG2111A</a>] </strong><br>
+                  <br>
+                  <strong>Author: </strong> Boyd Anderson; Chen Guoyi<br>
+                  <strong>Supervisors: </strong>Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
+               </p>
+            </article>
+         </main>
+         <aside>
+            <div>
+               <center>
+                  <br><br>
+                  <strong>Directory: </strong><br><br>
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td></td>
+                           <td colspan="3">Tutorial Homepage</td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">1. Setup ROS on RPi 4</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">2. Talker & Listener</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-slam">3. RPi LiDAR & SLAM</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>├</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">4. ROS Networking</a></td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>└</td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference">References</a></td>
+                           <td></td>
+                        </tr>
+						<tr>
+                           <td>&#10148;</td>
+                           <td></td>
+                           <td>&nbsp;├&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a//ros-reference/release">System Images</a></td>
+                           <td></td>
+                        </tr>
+						<tr>
+                           <td></td>
+                           <td></td>
+                           <td>&nbsp;└&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">??</a></td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <br><br>
+            </div>
+            </center>
+         </aside>
+         <main_noaside role="main">
+            <article>
+
+			
+			<h1><strong><font color="purple">Raspberry Pi OS (PurplePet) v1.0.1</strong></font></h1>
+
+            <div class="container">
+  <div class="text-content">
+    <p><strong>Release date:</strong> March 24th 2024<br>
+    <strong>System Architecture:</strong> 64-bit ARM<br>
+    <strong>Debian version:</strong> 10 (Buster) from 2023-05-03-raspios-buster-armhf.img.xz<br>
+    <strong>Size:</strong> 6.81 GB<br>
+    <strong>Download from: </strong><a href="https://drive.google.com/file/d/1dKGg09v2zfcghZ4PWqjVV3lji6FXYzfj/view?usp=drive_link">NUS SoC Google Drive (Public Access Granted!)</a>&nbsp;&nbsp;<strong>Checksum (SHA256):</strong> e61df9b4558efbd6db0af0714fdd41a5fc84a6930eb3db4fc8dff970b21c6393<br>
+	<strong><font color="red">Back up everything on your Raspberry Pi 4 to your PC before writing this image!</font></strong></p>
+  </div>
+  <div class="image-content">
+    <!-- Replace 'image_url_here.jpg' with your actual image URL -->
+    <img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros/img/cola.png" height="100" alt="PurplePet" class="custom-image">
+  </div>
+</div>
+
+
+			
+			<h3>Release Note</h3>
+			<ul>
+				<li>This OS image is the latest stable version based on <strong>Debian 10</strong> with pre-deployed <strong>ROS Noetic</strong> inside.</li>
+				<li>Designed for CG2111A AY23/24 Cohort ALEX Final Task. Built by CG2111A Teaching Team.</li>
+				<li>Students can build this OS from source by following instructions in <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol">Tutorial 1 (EoL Version)</a>.</li>
+				<li>Fixed some issues.</li>
+			</ul>
+			
+			<h3>Pre-deployed Features</h3>
+			<ul>
+				<li>All pre-deployed packages, libraries and softwares are built from the latest source.</li>
+				<li>All Debian 10 dependencies are up-to-date, since Debian 10 is End-of-Life (EoL) in 2024, this images was built from the last stable version of Debian 10.</li>
+				<li>Pre-deployed the latest version of ROS Noetic, with all necessary packages inside.</li>
+				<li>Pre-deployed RPi LiDAR packages, with all dependencies.</li>
+				<li>Pre-deployed Wi-Fi "NUS_STU" certificate.</li>
+				<li>Pre-installed the latest version of VNC Server for ARM (v6.7.2).</li>
+				<li>Pre-installed the latest version of Sublime Text Editor for ARM.</li>
+				<li>Pre-installed the latest version of Arduino IDE for ARM (v1.8.1).</li>
+				<li>Pre-installed the latest version of Thonny Python IDE for Debian with Python3 environment pre-defined (v3.7.3).</li>
+				<li>Pre-installed some Python libraries, such as flask, matplotlib...</li>
+				<li>Pre-installed the latest version of gparted for Debian 10.</li>
+				<li>Developed a new Terminal Welcome Rule in .bashrc, once student begins a new session from ssh or terminal, they will receive essential information from Raspberry Pi, such as ROS source, IP address, etc.</li>
+			</ul>
+			
+			<h3>Issue Solved</h3>
+			<ul>
+				<li>Permission on port /ttyUSB0 is granted to all users, which improve the stability of LiDAR connection.</li>
+				<li>Broadcasting Port 11311 is added to firewall outbound rules. (for <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">ROS Networking</a>).</li>
+				<li>HTTP Port 80 is added to firewall outbound rules (for Python Flask Server).</li>
+				<li>"Cannot currently show the desktop" issue solved by pre-render GUI.</li>
+				<li>Set up BOOT priority to avoid "Rainbow Like" screen.</li>
+			</ul>
+			
+            </article>
+            <center>
+               <strong>
+			   <p><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">&lt; Prev</a> &nbsp;Tutorial 4: ROS Networking</p>
+                  
+               </strong>
+            </center>
+         </main_noaside>
+      </section>
+      <footer>
+         <p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+         </p>
+      </footer>
+   </body>
+</html>

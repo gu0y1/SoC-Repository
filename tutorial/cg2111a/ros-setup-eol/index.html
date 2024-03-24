@@ -9,6 +9,9 @@
    gtag('config', 'G-49C0EJEDEC');
 </script>
 <style>
+  .content-grayed-out {
+    filter: grayscale(100%);
+  }
    .waiting { color: orange; }
    .completed { color: green; }
    .check{
@@ -46,6 +49,10 @@
       <link href="https://comp.nus.edu.sg/~guoyi/src/prism.css" rel="stylesheet" />
    </head>
    <body>
+   <div style="background-color: yellow; color: red; width: 100%; text-align: center; padding: 10px 0;"><strong>
+  Content on this page is about out-of-date, since Debian 10 and ROS 1 will be End-Of-Life in 2025, please navigate to new <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">tutorial 1</a>.</strong>
+</div>
+
       <header>
          <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
          <nav>
@@ -57,8 +64,9 @@
          </nav>
       </header>
       <section>
-         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / tutorial / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a">cg2111a</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup">ros-setup</a></strong>
+         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / tutorial / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a">cg2111a</a> / <a href="https://comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-setup-eol">ros-setup-eol</a></strong>
       </section>
+
       <section id="pageContent">
          <main role="main">
             <article>
@@ -66,8 +74,8 @@
                <hr>
                <p><strong>Engineering Principles and Practice II [<a href="https://nusmods.com/courses/CG2111A/engineering-principles-and-practice-ii" target="_blank">CG2111A</a>] </strong><br>
                   <br>
-                  <strong>Author: </strong> Chen Guoyi<br>
-                  <strong>Supervisors: </strong>Boyd Anderson; Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
+                  <strong>Author: </strong> Boyd Anderson; Chen Guoyi<br>
+                  <strong>Supervisors: </strong> Henry Tan; Nguyen Tien Khoa; Ravi S/O Suppiah; Sean Tan Rui Xiang; Tan Keng Yan, Colin.<br><br>
                   <strong>This tutorial is sponsored by the NUS School of Computing and brought to you by the AY23/24 CG2111A Teaching Team.</strong>
                </p>
             </article>
@@ -110,7 +118,7 @@
                         <tr>
                            <td></td>
                            <td>└</td>
-                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/">References</a></td>
+                           <td>&nbsp;<a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference">References</a></td>
                            <td></td>
                         </tr>
                      </tbody>
@@ -122,7 +130,7 @@
          <main_noaside role="main">
             <article>
                <center>
-                  <h1>Setup ROS on Raspberry Pi 4</h1>
+                  <h1>Setup ROS on Raspberry Pi 4 (Debian 10)</h1>
                </center>
                <p>This tutorial will take you from a basic operating system image to independently building up the Robot Operating System (ROS). Engaging in this setup personally will not only provide you with a deeper understanding of the fundamental principles of operating systems and ROS architecture but will also enhance your practical skills and theoretical knowledge within a real-world framework. This first-hand experience is invaluable for your future learning in advanced modules, such as <a href="https://nusmods.com/courses/EE3305/robotic-system-design" target="_blank">EE3305 Robotic System Design</a>, and will be a significant asset for any robotics-related internships.</p>
                <p>Be aware that the setup process can take more than 3 hours to complete. To accommodate different needs and schedules, the CG2111A Teaching Team has prepared a backup plan for you: an OS image that already includes ROS pre-installed. This allows you to bypass the setup process described in this tutorial and jump straight into using ROS with a ready-to-use image. Please refer to the Lab Instructions in Canvas.</p>
@@ -179,7 +187,8 @@ echo 'hdmi_mode=51'>> /boot/config</code></pre>
                <pre><code class="language-sh">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-noetic.list'</code></pre>
                <p>This command creates a new file in <code class="language-sh">/etc/apt/sources.list.d/</code>, which lists the ROS Noetic repository as a source for software packages.</p>
                <h3>3.2 Import the ROS package signing key</h3>
-               <pre><code class="language-sh">sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recvkey C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></pre>
+               <pre><code class="language-sh">curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+</code></pre>
                <p>This step authenticates the repository, ensuring that our system trusts the packages coming from it, which is crucial for security.</p>
                <p>After completing these steps, our system will be ready to install ROS Noetic packages.</p>
                <div class="check">
@@ -274,7 +283,7 @@ sudo apt-get install pyqt5-dev-tools qttools5-dev-tools</code></pre>
                <p>After completing these steps, your ROS Noetic workspace will be set up with the necessary packages and dependencies, ready for development.</p>
                <div class="check">
                   <strong style="color:white; background-color:gray;">Check Your Work Now&nbsp;</strong>
-                  <p>Please check by running the codes in this section; you received no warnings or errors. </p>
+                  <p>Please check by running the codes in this section; you received no warnings or errors. You will see "All required rosdeps installed successfully" at last!</p>
                   <p>Have you done all the tasks correctly above?<input type="checkbox" class="task-checkbox" id="task5"><label for="task5" class="status waiting">Waiting Complete</label></p>
                </div>
                <br><br>
@@ -369,11 +378,13 @@ sudo pip3 install netifaces
                </strong>
             </center>
          </main_noaside>
+
       </section>
       <footer>
          <p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
          </p>
       </footer>
+	  
       <script>
          document.addEventListener('DOMContentLoaded', function() {
              const checkboxes = document.querySelectorAll('.task-checkbox');
