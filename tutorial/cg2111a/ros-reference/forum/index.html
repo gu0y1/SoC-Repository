@@ -21,48 +21,24 @@
       <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
    </head>
    <style>
-  .container {
-    display: flex; /* 使用flexbox水平布局 */
-    justify-content: space-between; /* 文本和图片分别对齐到容器的左右两侧 */
-    align-items: center; /* 在垂直方向上居中对齐 */
-  }
-  .text-content {
-    /* Adjustments for the text section if needed */
-  }
-  .image-content {
-    height: auto; /* Adjust height automatically to match the text content's height */
-    max-height: 100%; /* Ensure the image is not taller than its container */
-  }
-  .custom-image {
-    display: block; /* Remove any extra space below the image */
-     /* Make sure the image is responsive and does not overflow its container */
-     /* Adjust the height automatically */
-  }
-    .custom-table {
-        border-collapse: separate;
-        border-spacing: 15px 0; /* 控制列间距 */
-    }
-    .custom-table th, .custom-table td {
-        padding: 5px; /* 增加单元格内的填充，让内容不会太靠近边框 */
-    }
-    .form-control {
-        margin-bottom: 10px;
-        padding-left: 20px; /* 增加左边距使内容向右缩进 */
-    }
-    .form-control label {
-        display: block;
-        margin-bottom: 5px;
-    }
-    .form-control input {
-        width: calc(100% - 20px); /* 调整宽度以适应左边距 */
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-    .form-control input[readonly] {
-        background-color: #f3f3f3;
-        color: #666;
-    }
+        /* Specific styles for the solved-questions table */
+        .solved-questions {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px; /* Increase spacing between rows */
+        }
+        
+        .solved-questions th, .solved-questions td {
+            border: 1px solid #ddd; /* Lighter border color */
+            padding: 10px; /* More padding for cell content */
+            text-align: left;
+            background-color: #f9f9f9; /* Light background for cells */
+        }
+        
+        .solved-questions th {
+            background-color: #e9e9e9; /* Slightly darker background for headers */
+            color: #333; /* Dark text for better contrast */
+        }
 </style>
    <body>
       <header>
@@ -146,7 +122,7 @@
                         </tr>
                      </tbody>
                   </table>
-                  <br><br>
+                  <br>
             </div>
             </center>
          </aside>
@@ -170,6 +146,30 @@
 <p>If, after careful review, you still find yourself facing challenges, kindly detail your question or issue clearly in this <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=Xu-lWwkxd06Fvc_rDTR-gghhb2vyGe9ItTkTPF_i9ZBUQktFQlBIUzVaQzQwNUdXNzFOUjRJMjFWMS4u">form</a>.</p>
 
 <p>Thank you for reaching out for support!</p>
+
+<br>
+
+<hr>
+
+<h1><center>Previous Solved Questions<center></h1>
+
+<br>
+
+<table class="solved-questions">
+    <tr>
+        <th>Date/SN</th>
+        <th>Category</th>
+        <th>Question</th>
+        <th>Solution</th>
+    </tr>
+    <tr>
+        <td><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference/forum/issue/240326_01.pdf">2024-03-26/01</a></td>
+        <td><a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">Tutorial 4</a></td>
+        <td>How to set up ROS Noetic on Ubuntu 22.04?</td>
+        <td>Install ROS Noetic on Ubuntu 20.04 LTS following the <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network">Tutorial 4</a>. Consider using a VM if you're on a newer Ubuntu version.</td>
+    </tr>
+    <!-- Repeat <tr>...</tr> block for each question -->
+</table>
 
 			
             </article>
