@@ -125,6 +125,8 @@
                   <h1>ROS Networking (Optional)</h1><br>
 				  <i>Your first taste of Internet of Things!</i>
                </center>
+			   <p style="color: red;"><strong>Attention:</strong> Starting this semester, this tutorial is optional because PurplePet OS has been optimized for the Raspberry Pi 4 to render SLAM Map data locally. You are encouraged to attempt solving any issues independently and refrain from consulting your TA and Professors with questions related to this tutorial. However, if you find yourself unable to resolve an issue on your own, you are welcome to submit your query on our <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-reference/forum">forum</a>.</p>
+
 			   
 			   <p>This tutorial requires students to have a solid understanding of ROS topics and the communication between them. Therefore, before diving into this tutorial, we highly recommend completing <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Tutorial 2: Talker & Listener</a> to familiarize yourself with the communications between topics and nodes.</p>
 
@@ -245,6 +247,10 @@ rosrun rplidar_ros rplidarNodeClient</code></pre>
 <br>
 
 <h2><strong>4. Visualize Mapping Data Using Python on PC</strong></h2>
+
+<p style="color: red;"><strong>Attention:</strong> Sections 4 and 5, "Visualize Mapping Data Using RViz on PC," are independent. You may skip Section 4 and proceed directly to Section 5 if you prefer.</p>
+
+
 <p>You may find that data formatted as <code class="language-sh">[INFO][TIME STAMP][ANGLE, DISTANCE]</code> is difficult for humans to interpret regarding the terrain surrounding the ALEX robot. To address this, we can utilize a Python script to render the LiDAR data into a real-time map, making it much easier to visualize the environment. Below is the Python code to achieve this. Please make sure you have installed all the necessary libraries before running this script.</p>
 
 <p>You can install the required libraries using pip, Python's package installer, by running the following command in your terminal:</p>
@@ -315,9 +321,77 @@ if __name__ == '__main__':
 
 <br>
 
+<h2><strong>5. Visualize Mapping Data Using RViz on PC</strong></h2>
 
+				<div class="warning">
+                  <strong style="color:white; background-color:red;">Before You Do&nbsp;</strong>
+                  <p><strong>Important:</strong> You must complete Sections 1 to 3 correctly. Additionally, it is required that you read <a href="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-topics">Tutorial 2: Talker & Listener</a> before starting this section.</p>
+				  <p><strong>Attention:</strong> Ubuntu 20.04 on Windows Subsystem for Linux cannot do this section!</p>
+               </div><br>
+			   
+			   <p>The current setup involves running both the RPLIDAR and SLAM node directly on a Raspberry Pi, designated as the master. Given the intensive computational demands of SLAM processes, the Raspberry Pi's limited processing capabilities can be a significant bottleneck. Offloading these processes to a more powerful laptop could dramatically reduce the computational load on the Raspberry Pi.</p>
 
+				<p>Our objective is to configure the laptop as the master node. This configuration would allow the laptop to receive lidar data from the Raspberry Pi and handle the execution of the SLAM node. This approach aims to leverage the laptop's superior processing power for improved performance and efficiency.</p>
+				
+				<h3>5.1 Setup on PC</h3>
+				
+				<p>5.1.1 Open a new terminal on your Ubuntu 20.04, enter these commands:</p>
+				<pre><code class="language-sh">source ~/cg2111a/devel/setup.bash
+export ROS_MASTER_URI=http://PC_IP:11311
+export ROS_HOSTNAME=PC_IP</code></pre>
+				The <code class="language-sh">PC_IP</code> means your PC's IP address, you can check using <code class="language-sh">ifconfig</code> command.
+				
+				<p>5.1.2 Navigate to the <code class="language-sh">.launch</code> file and edit it:</p>
+				<pre><code class="language-sh">cd ~/cg2111a/src/rplidar_ros/launch/</code></pre>
+				<p>And edit <code class="language-sh">view_slam.launch</code>:
+				<pre><code class="language-sh">nano view_slam.launch</code></pre>
+				<p>Before you edit <code class="language-sh">view_slam.launch</code>, you can see:
+				<pre><code class="language-sh">&lt;launch&gt;
+  &lt;include file="$(find rplidar_ros)/launch/rplidar.launch" /&gt;
+  &lt;include file="$(find rplidar_ros)/launch/hectormapping.launch" /&gt;
+  &lt;node name="rviz" pkg="rviz" type="rviz" args="-d $(find rplidar_ros)/rviz/slam.rviz" /&gt;
+&lt;/launch&gt;</code></pre>
 
+				<p>As we plan to launch the rpilidar node on Pi, we need to remove the <code class="language-sh">rplidar.launch</code> line. The new <code class="language-sh">view_slam.launch</code> looks like:
+				
+				<pre><code class="language-sh">&lt;launch&gt;
+  &lt;include file="$(find rplidar_ros)/launch/hectormapping.launch" /&gt;
+  &lt;node name="rviz" pkg="rviz" type="rviz" args="-d $(find rplidar_ros)/rviz/slam.rviz" /&gt;
+&lt;/launch&gt;</code></pre>
+
+<p>5.1.3 Save your changes.</p>
+
+<h3>5.2 Setup on Raspberry Pi</h3>
+
+<p>Open a new terminal on your Raspberry Pi, enter these commands:</p>
+<pre><code class="language-sh">source ~/cg2111a/devel/setup.bash
+export ROS_MASTER_URI=http://PC_IP:11311</code></pre>
+				<p>The <code class="language-sh">PC_IP</code> means your PC's IP address, you can check using <code class="language-sh">ifconfig</code> command on your Ubuntu 20.04, NOT on your Raspberry Pi!</p>
+
+<h3>5.3 Launch Networking and Start Remote RViz</h3>
+<p>5.3.1 <font color="blue"><strong>On you PC</strong></font>: Start <code class="language-sh">roscore</code> on master node (Ubuntu 20.04). <code class="language-sh">roscore</code> manages all the data routing and functions like the brain for ros. Your nodes will not start without it. Enter command in your current terminal:</p>
+
+<pre><code class="language-sh">roscore</code></pre>
+
+<p>5.3.2 <font color="green"><strong>On you Raspberry Pi</strong></font>: Start the rplidar node on Pi in the current terminal</p>
+<pre><code class="language-sh">roslaunch rplidar_ros rplidar.launch</code></pre>
+
+<p>5.3.3 <font color="blue"><strong>On you PC</strong></font>: Check if rplidar node is publishing and we can see the data on Ubuntu 20.04. Before you enter these commands in a new terminal, the terminal should be initialized by entering commands in section 5.1.1</p>
+
+<pre><code class="language-sh"># /scan topic should show in the list
+rostopic list
+# see the data being published on /scan topic
+# If a lot of numbers are shown then u r on right track
+rostopic echo /scan</code></pre>
+
+<p>5.3.4 <font color="blue"><strong>On you PC</strong></font>: Launch ROS networking and start remote RViz. Before you enter these commands in a new terminal, the terminal should be initialized by entering commands in section 5.1.1.</p>
+
+<pre><code class="language-sh">roslaunch rplidar_ros view_slam.launch</code></pre>
+
+<p>RViz should launch and you can see slam map on your Ubuntu 20.04:</p>
+
+<center><img src="https://www.comp.nus.edu.sg/~guoyi/tutorial/cg2111a/ros-network/img/remote_demo.gif" width=80%></center>
+<br>
                
                <center>
                   <h1>· End of Tutorial · </h1>
