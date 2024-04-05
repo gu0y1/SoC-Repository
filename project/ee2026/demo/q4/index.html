@@ -1,0 +1,217 @@
+<!doctype html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-49C0EJEDEC');
+</script>
+<style>
+        #switchPanel {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.switch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+.switch {
+    position: relative;
+    width: 20px; /* Width of the switch */
+    height: 40px; /* Height of the switch */
+    background-color: #333; /* Dark grey-black background */
+    border-radius: 0; /* Square shape */
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.switch:before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    bottom: 2px; /* Start at the bottom for vertical toggle */
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 0; /* Square shape for the toggle */
+    transition: transform 0.2s;
+}
+.switch.active:before {
+    transform: translateY(-20px); /* Move up to toggle */
+}
+.switch.disabled {
+    background-color: #555; /* Slightly lighter grey for disabled switches */
+    cursor: not-allowed;
+}
+.switch.disabled:before {
+    background-color: #777; /* Even lighter grey for the toggle of disabled switches */
+}
+.led {
+    margin-bottom: 5px; /* LED now above the switch */
+    height: 10px;
+    width: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+.led.on {
+    background-color: green;
+}
+
+    </style>
+<html lang="en" class="no-js">
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>Chen Guoyi - GeNUShin</title>
+      <meta name="description" content="Chen Guoyi's Research Website @ NUS School of Computing">
+      <link rel="stylesheet" href="https://comp.nus.edu.sg/~guoyi/src/style.css">
+      <script src="https://comp.nus.edu.sg/~guoyi/src/script.js"></script>
+   </head>
+   <body>
+      <header>
+         <div id="logo"><a href="https://nus.edu.sg/"target="_blank"><img src="https://comp.nus.edu.sg/~guoyi/src/img/nus-logo.png" style="vertical-align:middle"></a>Guoyi's Repository</div>
+         <nav>
+            <ul>
+               <li><a href="https://comp.nus.edu.sg/~guoyi">Home</a>
+               <li><a href="https://scholar.google.com/citations?user=FMnS8mMAAAAJ" target="_blank">Google Scholar</a>
+               <li><a href="https://blog.nus.edu.sg/chenguoyi/about/" target="_blank">About Guoyi</a>
+            </ul>
+         </nav>
+      </header>
+      <section>
+         <strong>&#10148; <a href="https://comp.nus.edu.sg/~guoyi">comp.nus.edu.sg/~guoyi</a> / project / <a href="https://comp.nus.edu.sg/~guoyi/project/ee2026/">ee2026</a> / <a href="https://comp.nus.edu.sg/~guoyi/project/ee2026/demo">demo</a> / <a href="https://comp.nus.edu.sg/~guoyi/project/ee2026/demo/q3">q3</a></strong>
+      </section>
+      <section id="pageContent">
+         <main role="main">
+            <article>
+               <h2>EE2026 Team Project: Ge<strong>NUS</strong>hin - Question Demo</h2>
+               <hr>
+               <p><strong>Digital Design [<a href="https://nusmods.com/courses/EE2026/digital-design">EE2026</a>] </strong><br>
+                  <br>
+                  <strong>Author: </strong> Fang Sihan, Ma Jiajun, Liu Siyi, Chen Jiajun<br>
+                  
+               </p>
+            </article>
+         </main>
+         <aside>
+            <div>
+               <center>
+                  <br>
+                  <strong>QR Code:</strong><br><br>
+                  <center><img src="https://comp.nus.edu.sg/~guoyi/project/ee2026/demo/img/q4.png" width=20%></center>
+				  <br>
+         </aside>
+         <main_noaside role="main">
+			<article>
+			<h1>Switcher Simulator</h1>
+			<p>In our FPGA project, the Finite State Machine is seamlessly integrated with this webpage. By interacting with the switchers here, you'll observe identical responses on our FPGA board in real-time.</p>
+			
+
+<div id="switchPanel">
+    <!-- Switches and LEDs will be generated here -->
+</div>
+
+<p>And you will see this pattern on our OLED screen:</p>
+
+<center>
+<div id="imageContainer">
+    <img id="switchImage" src="" alt="Switch Image" style="display:none; max-width:500px; max-height:200px;">
+</div>
+	</center>		
+			
+			</article>
+		</main_noaside>
+	</section>
+	<footer>
+		<p>	&copy; 2004-2024 Chen <a id="footer_a" href="mailto:guoyi@comp.nus.edu.sg">Guoyi@comp.nus.edu.sg</a>
+		</p>
+	</footer>
+
+
+</body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const switchPanel = document.getElementById('switchPanel');
+    const switchImage = document.getElementById('switchImage'); // 确保你的HTML中有这个元素
+    const disabledSwitches = [0, 13, 14, 15]; // 禁用开关的索引
+    const switchToImageMap = {
+        1: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/4_T.png',
+        2: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/2_T.png',
+        3: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/4_T.png',
+        4: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/1_T.png',
+        5: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/1_T.png',
+        6: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/3_T.png',
+        7: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/4_T.png',
+        8: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/2_T.png',
+        9: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/3_T.png',
+        10: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/1_T.png',
+        11: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/2_T.png',
+        12: 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/2_T.png',
+    };
+    let activeSwitches = []; // 用于跟踪激活的开关
+
+    // 根据激活的开关更新图片显示
+    function updateImage() {
+        if (activeSwitches.length > 1) {
+            // 如果激活了多个开关，显示error.png
+            switchImage.src = 'https://www.comp.nus.edu.sg/~guoyi/project/ee2026/demo/q4/img/error.png';
+            switchImage.style.display = 'block';
+        } else if (activeSwitches.length === 1) {
+            // 如果只激活了一个开关，显示对应的图片
+            switchImage.src = switchToImageMap[activeSwitches[0]] || '';
+            switchImage.style.display = 'block';
+        } else {
+            // 如果没有激活的开关，不显示图片
+            switchImage.style.display = 'none';
+        }
+    }
+
+    for (let i = 15; i >= 0; i--) {
+        const switchContainer = document.createElement('div');
+        switchContainer.className = 'switch-container';
+
+        const ledElem = document.createElement('div');
+        ledElem.className = 'led';
+        switchContainer.appendChild(ledElem);
+
+        const switchElem = document.createElement('div');
+        switchElem.className = 'switch' + (disabledSwitches.includes(i) ? ' disabled' : '');
+        switchContainer.appendChild(switchElem);
+
+        const label = document.createElement('div');
+        label.textContent = 'SW' + i;
+        switchContainer.appendChild(label);
+
+        switchPanel.appendChild(switchContainer);
+
+        if (!disabledSwitches.includes(i)) {
+            switchElem.addEventListener('click', function() {
+                if (switchElem.classList.contains('active')) {
+                    // 如果已激活，移除激活状态
+                    switchElem.classList.remove('active');
+                    ledElem.classList.remove('on');
+                    activeSwitches = activeSwitches.filter(s => s !== i);
+                } else {
+                    // 添加激活状态
+                    switchElem.classList.add('active');
+                    ledElem.classList.add('on');
+                    activeSwitches.push(i);
+                }
+                updateImage(); // 更新图片显示
+            });
+        }
+    }
+});
+
+</script>
+
+</html>
