@@ -365,8 +365,10 @@ export ROS_HOSTNAME=PC_IP</code></pre>
 
 <p>Open a new terminal on your Raspberry Pi, enter these commands:</p>
 <pre><code class="language-sh">source ~/cg2111a/devel/setup.bash
-export ROS_MASTER_URI=http://PC_IP:11311</code></pre>
+export ROS_MASTER_URI=http://PC_IP:11311
+export ROS_HOSTNAME=RPi_IP</code></pre>
 				<p>The <code class="language-sh">PC_IP</code> means your PC's IP address, you can check using <code class="language-sh">ifconfig</code> command on your Ubuntu 20.04, NOT on your Raspberry Pi!</p>
+				<p>The <code class="language-sh">RPi_IP</code> means your Raspberry Pi's IP address, you can check using <code class="language-sh">ifconfig</code> command on your Raspberry Pi, NOT on your Ubuntu PC!</p>
 
 <h3>5.3 Launch Networking and Start Remote RViz</h3>
 <p>5.3.1 <font color="blue"><strong>On you PC</strong></font>: Start <code class="language-sh">roscore</code> on master node (Ubuntu 20.04). <code class="language-sh">roscore</code> manages all the data routing and functions like the brain for ros. Your nodes will not start without it. Enter command in your current terminal:</p>
