@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49C0EJEDEC"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-49C0EJEDEC');
+</script>
+<meta charset="UTF-8">
+<title>CG2111A Scoreboard</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        text-align: center;
+        color: white;
+        background-color: black;
+    }
+    .timer {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    .progressBar {
+        width: 95%;
+        height: 30px;
+        background-color: #ddd;
+        margin: 20px auto;
+        border-radius: 0; /* 直角进度条 */
+        position: relative;
+    }
+    .progress {
+        height: 100%;
+        background-color: #4CAF50;
+        border-radius: 0; /* 直角填充 */
+        text-align: center;
+        line-height: 30px;
+        color: white;
+        width: 0%; /* 初始宽度为0 */
+    }
+    .container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .section {
+        margin: 0 5px;
+    }
+    .controlButton {
+        font-size: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    #terminal {
+        width: 60%; /* 设置终端宽度 */
+        margin: 0 auto; /* 居中显示 */
+        background-color: black;
+        color: white;
+        padding: 20px;
+        font-family: monospace;
+        overflow-y: auto;
+        height: 200px;
+        border: 1px solid #555;
+        text-align: left; /* 左对齐文本 */
+    }
+    .timestamp {
+        color: blue;
+    }
+    .runType {
+        color: yellow; /* 黄色字体 */
+    }
+    .robotCollide {
+        color: red; /* 红色字体 */
+    }
+</style>
+<script>
+    let timerInterval1, timerInterval2;
+
+    function startTimer(duration, display, progressBar, phase, colorChangeTimes, isAuto) {
+        let startTime = Date.now();
+        logActivity("Timer Begin", phase, isAuto ? "Auto Run" : "Invigilator Run");
+        let timerInterval = setInterval(function () {
+            let elapsedTime = Date.now() - startTime;
+            let remainingTime = duration - elapsedTime;
+            let minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+            let milliseconds = Math.floor((remainingTime % 1000) / 10);
+
+            // 更新显示时间
+            display.textContent = (minutes < 10 ? "0" : "") + minutes + "'" + (seconds < 10 ? "0" : "") + seconds + "''" + (milliseconds < 10 ? "0" : "") + milliseconds;
+
+            // 更新进度条
+            let progressPercent = (1 - (remainingTime / duration)) * 100;
+            progressBar.style.width = progressPercent + "%";
+
+            // 切换颜色阶段
+            if (colorChangeTimes) {
+                colorChangeTimes.forEach(time => {
+                    if (remainingTime <= time.duration && !time.changed) {
+                        display.style.color = time.color;
+                        time.changed = true;
+                    }
+                });
+            }
+
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                display.textContent = "00'00''00";
+                progressBar.style.width = "100%";
+                logActivity("Timer Stop", phase, isAuto ? "Auto Run" : "Invigilator Run");
+            }
+        }, 10);
+        return timerInterval;
+    }
+
+    function toggleTimer(phase, isAuto) {
+        let duration, display, progressBar, button, colorChangeTimes;
+        if (phase === 1) {
+            duration = 5 * 60 * 1000;
+            display = document.getElementById('timer1');
+            progressBar = document.getElementById('progress1');
+            button = document.getElementById('controlButton1');
+            if (!timerInterval1) {
+                timerInterval1 = startTimer(duration, display, progressBar, "5 mins preparing", null, isAuto);
+                button.textContent = "Pause";
+            } else {
+                clearInterval(timerInterval1);
+                timerInterval1 = null;
+                button.textContent = "Begin";
+                logActivity("Timer Stop", "5 mins preparing", isAuto ? "Auto Run" : "Invigilator Run");
+            }
+        } else if (phase === 2) {
+            duration = 6 * 60 * 1000;
+            display = document.getElementById('timer2');
+            progressBar = document.getElementById('progress2');
+            button = document.getElementById('controlButton2');
+            colorChangeTimes = [
+                { duration: 4 * 60 * 1000, color: 'blue', changed: false },
+                { duration: 2 * 60 * 1000, color: 'red', changed: false },
+                { duration: 1 * 60 * 1000, color: 'red', changed: false }
+            ];
+            if (!timerInterval2) {
+                timerInterval2 = startTimer(duration, display, progressBar, "6 mins competing", colorChangeTimes, isAuto);
+                button.textContent = "Pause";
+            } else {
+                clearInterval(timerInterval2);
+                timerInterval2 = null;
+                button.textContent = "Begin";
+                logActivity("Timer Stop", "6 mins competing", isAuto ? "Auto Run" : "Invigilator Run");
+            }
+        }
+    }
+
+    function logActivity(action, phase, runType) {
+        let terminal = document.getElementById('terminal');
+        let now = new Date();
+        let timestamp = `[${now.toLocaleDateString('zh-CN')} ${now.toLocaleTimeString('zh-CN')}]`;
+        terminal.innerHTML += `<div><span class="timestamp">${timestamp}</span> - ${action} (${phase}) - <span class="runType">${runType}</span></div>`;
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function handleEvent(eventType) {
+        switch (eventType) {
+            case 'reset':
+                logActivity('Robot Reset', 'Student Require', "Invigilator Run");
+                break;
+            case 'stop':
+                logActivity('Robot Stop', 'Student Require', "Invigilator Run");
+                break;
+            case 'collide':
+                logActivity('Robot Collide', 'Invigilator Observed', "Invigilator Announcement");
+                break;
+            case 'found':
+                logActivity('Victim Found', 'Student Declare', "Invigilator Announcement");
+                break;
+            case 'red':
+                logActivity('Victim is Red', 'Student Declare', "Invigilator Announcement");
+                break;
+            case 'green':
+                logActivity('Victim is Green', 'Student Declare', "Invigilator Announcement");
+                break;
+            case 'white':
+                logActivity('Victim is White', 'Student Declare', "Invigilator Announcement");
+                break;
+        }
+    }
+</script>
+</head>
+<body>
+<h1>CG2111A Trial & Final Run Scoreboard &nbsp;<font size=4px> <i>Invigilator Use Only</i></font></h1>
+<div class="container">
+    <div class="section">
+        <div class="timer" id="timer1">05'00''00</div>
+        <div class="progressBar"><div id="progress1" class="progress"></div></div>
+        <p>5 Mins Preparation</p>
+        <button id="controlButton1" class="controlButton" onclick="toggleTimer(1, false)">Begin</button>
+    </div>
+    <div class="section">
+        <div class="timer" id="timer2">06'00''00</div>
+        <div class="progressBar"><div id="progress2" class="progress"></div></div>
+        <p>6 Mins Competition</p>
+        <button id="controlButton2" class="controlButton" onclick="toggleTimer(2, false)">Begin</button>
+    </div>
+</div>
+<br><hr><br>
+<div id="terminal"></div>
+<br><hr><br>
+<div>
+    <button class="controlButton" onclick="handleEvent('reset')">Reset</button>
+    <button class="controlButton" onclick="handleEvent('stop')">Stop</button>
+    <button class="controlButton" onclick="handleEvent('collide')">Collide</button>
+    <button class="controlButton" onclick="handleEvent('found')">Victim Found</button>
+    <button class="controlButton" onclick="handleEvent('red')">Declare Red</button>
+    <button class="controlButton" onclick="handleEvent('green')">Declare Green</button>
+    <button class="controlButton" onclick="handleEvent('white')">Declare White</button>
+</div>
+</body>
+</html>
